@@ -16,6 +16,25 @@ export const getAllShareboards = async (req, res) => {
   }
 };
 
+// Funktion für das Abrufen eines Shareboards
+
+export const getShareboardById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const shareboard = await db("shareboard_shareboards")
+      .where("id", id)
+      .first();
+
+    if (!shareboard) {
+      return res.status(404).json({ message: "Shareboard nicht gefunden" });
+    }
+    res.status(200).json(shareboard);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Fehler beim Abrufen der Shareboards" });
+  }
+};
+
 // Funktion für das Erstellen eines neuen Shareboards
 export const createShareboard = async (req, res) => {
   const { name } = req.body;
