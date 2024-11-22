@@ -4,12 +4,15 @@ import {
   createShareboard,
   updateShareboard,
   deleteShareboard,
+  getShareboardById,
 } from "../controllers/shareboardControllers.js";
 
 const router = express.Router();
 
 // Route für alle Shareboards
 router.get("/shareboards", getAllShareboards);
+
+router.get("/shareboard/:id", getShareboardById);
 
 // Weitere Routen folgen später, für jetzt die POST-Route für das Erstellen
 router.post("/shareboard", createShareboard);

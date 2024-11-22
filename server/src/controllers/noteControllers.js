@@ -71,3 +71,20 @@ export const deleteNote = async (req, res) => {
     res.status(500).json({ message: "Fehler beim Löschen der Notiz" });
   }
 };
+
+// Funktion für das Abrufen einer Note
+
+export const getNoteById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const note = await db("shareboard_notes").where("id", id).first();
+
+    if (!note) {
+      return res.status(404).json({ message: "Note nicht gefunden" });
+    }
+    res.status(200).json(note);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Fehler beim Abrufen der Notes" });
+  }
+};
