@@ -33,3 +33,41 @@ export const createShareboard = async (req, res) => {
     res.status(500).json({ message: "Fehler beim Erstellen des Shareboards" });
   }
 };
+
+// Funktion für das Aktualisieren eines Shareboards
+export const updateShareboard = async (req, res) => {
+  const { id } = req.params; // ID aus der URL
+  const { name } = req.body; // Neuer Name aus dem Body
+
+  try {
+    // Aktualisierung in der Datenbank
+    const [updatedShareboard] = await db("shareboard_shareboards")
+      .where({ id })
+      .update({ name })
+      .returning("*");
+
+    // Rückgabe des aktualisierten Shareboards
+    res.json(updatedShareboard);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "Fehler beim Aktualisieren des Shareboards" });
+  }
+};
+
+// Funktion für das Löschen eines Shareboards
+export const deleteShareboard = async (req, res) => {
+  const { id } = req.params; // ID aus der URL
+
+  try {
+    // Löschen aus der Datenbank
+    await db("shareboard_shareboards").where({ id }).del();
+
+    // Erfolgsnachricht zurückgeben
+    res.json({ message: `Shareboard mit ID ${id} wurde gelöscht.` });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Fehler beim Löschen des Shareboards" });
+  }
+};
