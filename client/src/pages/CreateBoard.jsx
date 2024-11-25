@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 function CreateBoard() {
   const location = useLocation();
   const selectedLayout = location.state?.layout || "Kein Layout ausgewählt";
@@ -21,16 +23,13 @@ function CreateBoard() {
     console.log("Gesammelte Daten:", boardData);
 
     try {
-      const response = await fetch(
-        "http://localhost:2222/api/create-new-board",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(boardData),
-        }
-      );
+      const response = await fetch(`${backendUrl}/api/create-new-board`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(boardData),
+      });
 
       if (!response.ok) {
         throw new Error("Fehler beim Erstellen des Shareboards");
