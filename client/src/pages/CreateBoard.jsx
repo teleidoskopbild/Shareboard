@@ -15,12 +15,35 @@ function CreateBoard() {
     ownerEmail,
     layout: selectedLayout,
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     // Zeigt die Daten an, die der User eingegeben hat
     console.log("Gesammelte Daten:", boardData);
 
-    // Hier könnte später die Logik zum Senden der Daten an den Server kommen
+    try {
+      const response = await fetch(
+        "http://localhost:2222/api/create-new-board",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(boardData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Fehler beim Erstellen des Shareboards");
+      }
+
+      const result = await response.json();
+      console.log("Shareboard erstellt:", result);
+
+      // Hier kannst du weiter mit der Antwort vom Server arbeiten,
+      // z.B. Redirect zur neuen Board-Seite oder eine Bestätigung anzeigen.
+    } catch (error) {
+      console.error("Fehler:", error);
+    }
   };
 
   return (
