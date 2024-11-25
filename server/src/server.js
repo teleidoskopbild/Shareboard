@@ -6,6 +6,7 @@ import boardColumnRoutes from "./routes/boardColumnRoutes.js";
 import noteRoutes from "./routes/noteRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import logRoutes from "./routes/logRoutes.js";
+import createNewBoardRoute from "./routes/createNewBoardRoute.js";
 
 const router = express.Router();
 
@@ -23,6 +24,7 @@ app.use("/api", boardColumnRoutes);
 app.use("/api", noteRoutes);
 app.use("/api", userRoutes);
 app.use("/api", logRoutes);
+app.use("/api", createNewBoardRoute);
 
 // Test-Route
 app.get("/", (req, res) => {
