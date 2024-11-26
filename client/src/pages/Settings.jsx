@@ -9,6 +9,55 @@ export default function Settings() {
   const [newUserName, setNewUserName] = useState("");
   const [newUserEmail, setNewUserEmail] = useState("");
 
+  const [editUserId, setEditUserId] = useState(null);
+  const [editUserName, setEditUserName] = useState("");
+  const [editUserEmail, setEditUserEmail] = useState("");
+
+  const handleEditUser = (user) => {
+    setEditUserId(user.id);
+    setEditUserName(user.name);
+    setEditUserEmail(user.email || "");
+  };
+
+  const handleSaveUser = async (e) => {
+    e.preventDefault();
+
+    const updatedUser = { name: editUserName, email: editUserEmail };
+
+    try {
+      const response = await fetch(
+        `${backendUrl}/api/settings/${shareboardId}/${ownerKey}/users/${editUserId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedUser),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setBoardData((prevData) => ({
+          ...prevData,
+          users: prevData.users.map((user) =>
+            user.id === editUserId
+              ? { ...user, ...data } // Vorhandene Daten mit neuen Daten kombinieren
+              : user
+          ),
+        }));
+
+        setEditUserId(null); // Bearbeitung zurücksetzen
+        setEditUserName(""); // Eingabefeld zurücksetzen
+        setEditUserEmail(""); // Eingabefeld zurücksetzen
+      } else {
+        console.log("Fehler beim Speichern der Änderungen.");
+      }
+    } catch (error) {
+      console.log("Fehler beim Speichern der Änderungen:", error.message);
+    }
+  };
+
   useEffect(() => {
     const fetchBoardSettings = async () => {
       try {
@@ -67,13 +116,13 @@ export default function Settings() {
   if (!boardData) {
     return <div>Loading...</div>;
   }
+  console.log(boardData.users);
 
   return (
     <div>
       <h1>Boardname: {boardData.boardName}</h1>
       <p>Boardowner: {boardData.ownerName}</p>
       <p>Your personal Owner Key: {boardData.ownerKey}</p>
-
       <h2>Benutzer Hinzufügen</h2>
       <form onSubmit={handleAddUser}>
         <div>
@@ -97,13 +146,38 @@ export default function Settings() {
       </form>
 
       <h2>Benutzer des Boards</h2>
-      <h2>Benutzer des Boards</h2>
       <ul>
         {boardData.users.map((user) => (
           <li key={user.id}>
             {user.name} {user.email ? `(${user.email})` : "(Keine E-Mail)"}
             <br />
             Schlüssel: {user.shareboardKey}
+            {/* Bearbeitungsformular nur anzeigen, wenn der Benutzer bearbeitet wird */}
+            {editUserId === user.id ? (
+              <form onSubmit={handleSaveUser}>
+                <div>
+                  <label>Neuer Name:</label>
+                  <input
+                    type="text"
+                    value={editUserName}
+                    onChange={(e) => setEditUserName(e.target.value)}
+                    required
+                  />
+                </div>
+                <div>
+                  <label>Neue E-Mail:</label>
+                  <input
+                    type="email"
+                    value={editUserEmail}
+                    onChange={(e) => setEditUserEmail(e.target.value)}
+                  />
+                </div>
+                <button type="submit">Speichern</button>
+                <button onClick={() => setEditUserId(null)}>Abbrechen</button>
+              </form>
+            ) : (
+              <button onClick={() => handleEditUser(user)}>Bearbeiten</button>
+            )}
           </li>
         ))}
       </ul>
