@@ -21,6 +21,10 @@ const router = createBrowserRouter([
       { path: "selectboard", element: <SelectBoard /> },
       { path: "settings/:shareboardId/:ownerKey", element: <Settings /> },
       { path: "settings/:shareboardId/:ownerKey/users", element: <Settings /> },
+      {
+        path: "settings/:shareboardId/:ownerKey/users/:id",
+        element: <Settings />,
+      },
       { path: "board/:shareboardId?", element: <Board /> },
     ],
   },
