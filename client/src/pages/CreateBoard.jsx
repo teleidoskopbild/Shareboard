@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 function CreateBoard() {
   const location = useLocation();
+  const navigate = useNavigate();
   const selectedLayout = location.state?.layout || "Kein Layout ausgewählt";
 
   const [boardName, setBoardName] = useState("");
@@ -38,8 +39,11 @@ function CreateBoard() {
       const result = await response.json();
       console.log("Shareboard erstellt:", result);
 
-      // Hier kannst du weiter mit der Antwort vom Server arbeiten,
-      // z.B. Redirect zur neuen Board-Seite oder eine Bestätigung anzeigen.
+      // Nach der erfolgreichen Erstellung des Boards auf die Settings-Seite umleiten
+      // Ergebnis enthält den `shareboardId` und den `ownerKey`
+      navigate(
+        `/settings/${result.newShareboard.id}/${result.owner.shareboard_key}`
+      );
     } catch (error) {
       console.error("Fehler:", error);
     }
