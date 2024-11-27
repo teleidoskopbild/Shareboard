@@ -18,6 +18,7 @@ function CreateBoard() {
     ownerEmail,
     layout: selectedLayout,
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Zeigt die Daten an, die der User eingegeben hat
@@ -42,7 +43,8 @@ function CreateBoard() {
       // Nach der erfolgreichen Erstellung des Boards auf die Settings-Seite umleiten
       // Ergebnis enthält den `shareboardId` und den `ownerKey`
       navigate(
-        `/settings/${result.newShareboard.id}/${result.owner.shareboard_key}`
+        `/settings/${result.newShareboard.id}/${result.owner.shareboard_key}`,
+        { state: { result } }
       );
     } catch (error) {
       console.error("Fehler:", error);

@@ -44,6 +44,7 @@ export const addUserToBoard = async (req, res) => {
         name: user.name,
         email: user.email,
         shareboardKey: user.shareboard_key,
+        rights: user.rights,
       })),
     });
   } catch (error) {
