@@ -144,6 +144,29 @@ export default function Settings() {
     }
   };
 
+  const handleDeleteBoard = async () => {
+    try {
+      const response = await fetch(
+        `${backendUrl}/api/settings/${shareboardId}/${ownerKey}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (response.ok) {
+        // Redirect nach erfolgreichem Löschen oder eine Erfolgsnachricht anzeigen
+        alert("Board wurde erfolgreich gelöscht!");
+        // Weiterleitung zu einer anderen Seite (z.B. zur Übersicht)
+        window.location.href = "/"; // Beispiel: Zur Startseite
+      } else {
+        const errorData = await response.json();
+        console.log(errorData.message); // Fehler anzeigen
+      }
+    } catch (error) {
+      console.log("Fehler beim Löschen des Boards:", error.message);
+    }
+  };
+
   if (!boardData) {
     return <div>Loading...</div>;
   }
@@ -225,6 +248,16 @@ export default function Settings() {
             </li>
           ))}
       </ul>
+      {boardData.ownerKey === ownerKey && (
+        <div>
+          <h2>Board löschen</h2>
+          <p>
+            Sind Sie sicher, dass Sie das gesamte Board inklusive aller Benutzer
+            und Daten löschen möchten?
+          </p>
+          <button onClick={handleDeleteBoard}>Board löschen</button>
+        </div>
+      )}
     </div>
   );
 }
