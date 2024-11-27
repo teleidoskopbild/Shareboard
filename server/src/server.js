@@ -10,6 +10,7 @@ import createNewBoardRoute from "./routes/createNewBoardRoute.js";
 import getBoardSettingsRoute from "./routes/getBoardSettingsRoute.js";
 import addUserToBoardRoute from "./routes/addUserToBoardRoute.js";
 import editUserRoute from "./routes/editUserRoute.js";
+import deleteUserRoute from "./routes/deleteUserRoute.js";
 
 const router = express.Router();
 
@@ -31,6 +32,7 @@ app.use("/api", createNewBoardRoute);
 app.use("/api", getBoardSettingsRoute);
 app.use("/api", addUserToBoardRoute);
 app.use("/api/", editUserRoute);
+app.use("/api", deleteUserRoute);
 
 // Test-Route
 app.get("/", (req, res) => {

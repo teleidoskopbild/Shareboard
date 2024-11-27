@@ -120,6 +120,30 @@ export default function Settings() {
     }
   };
 
+  const handleDeleteUser = async (userId) => {
+    try {
+      const response = await fetch(
+        `${backendUrl}/api/settings/${shareboardId}/${ownerKey}/users/${userId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (response.ok) {
+        // Benutzer erfolgreich gelöscht, jetzt Board-Daten neu laden
+        setBoardData((prevData) => ({
+          ...prevData,
+          users: prevData.users.filter((user) => user.id !== userId),
+        }));
+      } else {
+        const errorData = await response.json();
+        console.log(errorData.message); // Fehler anzeigen
+      }
+    } catch (error) {
+      console.log("Fehler beim Löschen des Benutzers:", error.message);
+    }
+  };
+
   if (!boardData) {
     return <div>Loading...</div>;
   }
@@ -189,7 +213,14 @@ export default function Settings() {
                   <button onClick={() => setEditUserId(null)}>Abbrechen</button>
                 </form>
               ) : (
-                <button onClick={() => handleEditUser(user)}>Bearbeiten</button>
+                <div>
+                  <button onClick={() => handleEditUser(user)}>
+                    Bearbeiten
+                  </button>
+                  <button onClick={() => handleDeleteUser(user.id)}>
+                    Löschen
+                  </button>
+                </div>
               )}
             </li>
           ))}
