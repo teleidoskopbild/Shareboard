@@ -11,6 +11,7 @@ import getBoardSettingsRoute from "./routes/getBoardSettingsRoute.js";
 import addUserToBoardRoute from "./routes/addUserToBoardRoute.js";
 import editUserRoute from "./routes/editUserRoute.js";
 import deleteUserRoute from "./routes/deleteUserRoute.js";
+import deleteShareboardRoute from "./routes/deleteShareboardRoute.js";
 
 const router = express.Router();
 
@@ -33,6 +34,7 @@ app.use("/api", getBoardSettingsRoute);
 app.use("/api", addUserToBoardRoute);
 app.use("/api/", editUserRoute);
 app.use("/api", deleteUserRoute);
+app.use("/api", deleteShareboardRoute);
 
 // Test-Route
 app.get("/", (req, res) => {
