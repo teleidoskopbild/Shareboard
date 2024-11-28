@@ -15,7 +15,7 @@ export const deleteBoard = async (req, res) => {
         .json({ message: "Nur der Owner kann das Board löschen." });
     }
 
-    // Löschen der Notizen, Spalten, Logs und Benutzer, die zum Board gehören
+    // Löschen der Notizen, Spalten, Logs und Benutzer, die zum Board gehören, Reihenfolge wichtig!!!
     await db.transaction(async (trx) => {
       await trx("shareboard_notes")
         .where({ shareboard_fk: shareboardId })
@@ -28,15 +28,12 @@ export const deleteBoard = async (req, res) => {
         .del();
       await trx("shareboard_logs").where({ shareboard_fk: shareboardId }).del();
 
-      // Schließlich das Shareboard selbst löschen
       await trx("shareboard_shareboards").where({ id: shareboardId }).del();
     });
 
-    res
-      .status(200)
-      .json({
-        message: "Board und alle zugehörigen Daten erfolgreich gelöscht.",
-      });
+    res.status(200).json({
+      message: "Board und alle zugehörigen Daten erfolgreich gelöscht.",
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Fehler beim Löschen des Boards." });
