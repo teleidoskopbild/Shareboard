@@ -40,11 +40,11 @@ export const getShareboard = async (req, res) => {
         shareboard.id
       );
 
-      // Logge den Zugriff
-      await trx("shareboard_logs").insert({
-        shareboard_fk: shareboard.id,
-        message: `Zugriff durch ${user.name} (${userKey})`,
-      });
+      //   // Logge den Zugriff
+      //   await trx("shareboard_logs").insert({
+      //     shareboard_fk: shareboard.id,
+      //     message: `Zugriff durch ${user.name} (${userKey})`,
+      //   });
 
       // Lade alle Logs des Boards
       const logs = await trx("shareboard_logs")
