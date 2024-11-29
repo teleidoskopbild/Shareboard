@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -13,11 +13,10 @@ export default function Settings() {
   const [editUserName, setEditUserName] = useState("");
   const [editUserEmail, setEditUserEmail] = useState("");
 
-  const { state } = useLocation();
+  // const { state } = useLocation();
   const navigate = useNavigate();
-  console.log("state: ", state);
-  console.log(state.result.owner.rights);
-
+  // console.log("state: ", state);
+  // console.log(shareboardId, ownerKey);
   useEffect(() => {
     console.log("useEffect", shareboardId, ownerKey);
     const fetchBoardSettings = async () => {
