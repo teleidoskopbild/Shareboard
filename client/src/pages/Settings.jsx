@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -14,6 +14,7 @@ export default function Settings() {
   const [editUserEmail, setEditUserEmail] = useState("");
 
   const { state } = useLocation();
+  const navigate = useNavigate();
   console.log("state: ", state);
   console.log(state.result.owner.rights);
 
@@ -38,6 +39,10 @@ export default function Settings() {
 
     fetchBoardSettings();
   }, [shareboardId, ownerKey]); // nur neu laden, wenn sich shareboardId oder ownerKey ändern
+
+  const handleNavigateToBoard = () => {
+    navigate(`/board/${boardData.ownerKey}`);
+  };
 
   const handleEditUser = (user) => {
     setEditUserId(user.id);
@@ -199,7 +204,6 @@ export default function Settings() {
         </div>
         <button type="submit">Benutzer hinzufügen</button>
       </form>
-
       <h2>Benutzer des Boards</h2>
       <ul>
         {boardData.users
@@ -247,7 +251,10 @@ export default function Settings() {
               )}
             </li>
           ))}
-      </ul>
+      </ul>{" "}
+      <div>
+        <button onClick={handleNavigateToBoard}>Zu Board gehen</button>
+      </div>
       {boardData.ownerKey === ownerKey && (
         <div>
           <h2>Board löschen</h2>
