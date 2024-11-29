@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { DndContext, DragOverlay } from "@dnd-kit/core";
 import BoardColumn from "../components/BoardColumn.jsx";
 import Note from "../components/Note.jsx";
@@ -16,6 +16,13 @@ export default function Board() {
   const [newTitle, setNewTitle] = useState("");
   const [newDescription, setNewDescription] = useState("");
   const [userLog, setUserLog] = useState([]);
+
+  const navigate = useNavigate();
+
+  const handleNavigateToSettings = () => {
+    // Navigiere zurück zur Settings-Seite mit den entsprechenden Parametern
+    navigate(`/settings/${boardData.board.id}/${userKey}`);
+  };
 
   const handleDragStart = (event) => {
     const { active } = event;
@@ -168,6 +175,13 @@ export default function Board() {
 
   return (
     <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
+      {boardData.isOwner && (
+        <div>
+          <button onClick={handleNavigateToSettings}>
+            Zurück zu den Einstellungen
+          </button>
+        </div>
+      )}
       <div>
         <h1>{boardData.board.name}</h1> {/* Boardname anzeigen */}
         <h2>Board Nutzer:</h2>
