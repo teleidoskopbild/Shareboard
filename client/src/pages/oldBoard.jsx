@@ -11,12 +11,14 @@ export default function Board() {
   const [boardData, setBoardData] = useState(null); // Board-Daten speichern
   const [error] = useState(null); // Fehler speichern
 
-  const [notes, setNotes] = useState([]); // Original-Notizen
-  const [tempNotes, setTempNotes] = useState([]); // Zwischenzustand der Notizen
+  const [notes, setNotes] = useState([]);
   const [activeNote, setActiveNote] = useState(null);
   const [newTitle, setNewTitle] = useState("");
   const [newDescription, setNewDescription] = useState("");
   const [userLog, setUserLog] = useState([]);
+  const [tempNotes, setTempNotes] = useState([]);
+
+  // const boards = ["backlog", "in-progress", "done", "to-review"];
 
   const handleDragStart = (event) => {
     const { active } = event;
@@ -34,21 +36,13 @@ export default function Board() {
 
     if (!over) return;
     if (over) {
-      const draggedNote = tempNotes.find((note) => note.id === active.id);
+      //   if (over && active.id !== over.id)
+      const draggedNote = notes.find((note) => note.id === active.id);
 
       if (!draggedNote) {
         console.error("Keine Notiz mit der ID gefunden:", active.id);
         return;
       }
-
-      // Sofort im Zwischenzustand (UI) aktualisieren
-      setTempNotes((prevNotes) =>
-        prevNotes.map((note) =>
-          note.id === active.id
-            ? { ...note, board_column_fk: over.id } // Update nur im Zwischenzustand
-            : note
-        )
-      );
 
       try {
         // API-Call zum Backend für die Spaltenänderung
@@ -66,8 +60,8 @@ export default function Board() {
         }
 
         const updatedNote = await response.json();
-
-        // Nach erfolgreicher API-Antwort aktualisieren wir den Originalzustand
+        console.log(updatedNote);
+        // Lokalen Zustand aktualisieren
         setNotes((prevNotes) =>
           prevNotes.map((note) =>
             note.id === active.id
@@ -76,7 +70,7 @@ export default function Board() {
           )
         );
 
-        // Log-Nachricht erstellen
+        // Log-Nachricht erstellen *
         setUserLog((prevLog) => [
           ...prevLog,
           `${activeNote.title} wurde verschoben nach ${
@@ -98,10 +92,9 @@ export default function Board() {
       status: "backlog", // Neue Notiz landet im "backlog"
     };
     setNotes([...notes, newNote]);
-    setTempNotes([...tempNotes, newNote]); // Auch im Zwischenzustand speichern
     setNewTitle(""); // Eingabefelder zurücksetzen
     setNewDescription("");
-    // Log-Nachricht erstellen
+    // Log-Nachricht erstellen, wenn eine Notiz erstellt wird
     setUserLog((prevLog) => [
       ...prevLog,
       `Neue Notiz "${newTitle}" wurde um ${new Date().toLocaleTimeString()} erstellt`,
@@ -109,6 +102,7 @@ export default function Board() {
   };
 
   useEffect(() => {
+    // Funktion zum Abrufen der Daten
     const fetchBoardData = async () => {
       try {
         const response = await fetch(`${backendUrl}/api/board/${userKey}`);
@@ -118,7 +112,6 @@ export default function Board() {
         const data = await response.json();
         setBoardData(data); // Speichere die Daten im State
         setNotes(data.notes);
-        setTempNotes(data.notes); // Setze auch den Zwischenzustand
         console.log("Board-Daten:", data); // Daten in der Konsole anzeigen
       } catch (err) {
         console.error("Fetch-Fehler:", err.message);
@@ -135,6 +128,8 @@ export default function Board() {
   if (!boardData) {
     return <h1>Board wird geladen...</h1>;
   }
+
+  console.log(boardData.notes);
 
   return (
     <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
@@ -178,9 +173,9 @@ export default function Board() {
           <BoardColumn
             key={column.id}
             title={column.name} // Titel der Spalte
-            notes={tempNotes.filter(
+            notes={boardData.notes.filter(
               (note) => note.board_column_fk === column.id
-            )} // Notizen der Spalte aus dem Zwischenzustand
+            )} // Notizen der Spalte
             columnId={column.id}
           />
         ))}

@@ -1,11 +1,11 @@
 import { useDroppable } from "@dnd-kit/core";
 import Note from "./Note";
 
-const BoardColumn = ({ title, notes }) => {
+const BoardColumn = ({ title, notes, columnId }) => {
   const { setNodeRef, isOver } = useDroppable({
-    id: title,
+    id: columnId,
   });
-
+  console.log(title);
   return (
     <div
       ref={setNodeRef}
