@@ -9,6 +9,7 @@ import Login from "./pages/Login.jsx";
 import Settings from "./pages/Settings.jsx";
 import Board from "./pages/Board.jsx";
 import SelectBoard from "./pages/SelectBoard.jsx";
+import FreestyleBoard from "./pages/FreestyleBoard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       { path: "login", element: <Login /> },
       { path: "createboard", element: <CreateBoard /> },
       { path: "selectboard", element: <SelectBoard /> },
+      { path: "freestyleboard", element: <FreestyleBoard /> },
       { path: "settings/:shareboardId/:ownerKey", element: <Settings /> },
       { path: "settings/:shareboardId/:ownerKey/users", element: <Settings /> },
       {
