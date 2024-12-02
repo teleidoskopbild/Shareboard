@@ -51,6 +51,18 @@ const UpdateNote = () => {
     }
   };
 
+  const handleDelete = async () => {
+    const response = await fetch(`${backendUrl}/api/notes/${id}`, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      navigate(`/board/${userKey}`); // Nach dem Löschen zurück zur Notiz-Seite navigieren
+    } else {
+      console.error("Fehler beim Löschen der Notiz");
+    }
+  };
+
   return (
     <div>
       <h1>Notiz bearbeiten</h1>
@@ -86,6 +98,7 @@ const UpdateNote = () => {
         </div>
         <button type="submit">Notiz aktualisieren</button>
       </form>
+      <button onClick={handleDelete}>Notiz löschen</button>
     </div>
   );
 };

@@ -12,9 +12,6 @@ const Note = ({ note, userKey }) => {
     navigate(`/board/${userKey}/notes/${note.id}`);
   };
 
-  console.log("userKey in Note:", userKey);
-  console.log(`/board/${userKey}/notes/${note.id}`);
-
   return (
     <div
       ref={setNodeRef}
