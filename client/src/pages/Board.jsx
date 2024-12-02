@@ -224,6 +224,7 @@ export default function Board() {
             title={column.name} // Titel der Spalte
             notes={notes.filter((note) => note.board_column_fk === column.id)} // Notizen der Spalte aus dem Zwischenzustand
             columnId={column.id}
+            userKey={userKey}
           />
         ))}
       </div>
@@ -237,7 +238,7 @@ export default function Board() {
       </div>
 
       <DragOverlay>
-        {activeNote ? <Note note={activeNote} /> : null}{" "}
+        {activeNote ? <Note note={activeNote} userKey={userKey} /> : null}{" "}
         {/* Overlay für das dragged Element */}
       </DragOverlay>
     </DndContext>

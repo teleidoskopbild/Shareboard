@@ -10,6 +10,7 @@ import Settings from "./pages/Settings.jsx";
 import Board from "./pages/Board.jsx";
 import SelectBoard from "./pages/SelectBoard.jsx";
 import FreestyleBoard from "./pages/FreestyleBoard.jsx";
+import UpdateNote from "./pages/UpdateNote.jsx";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
         element: <Settings />,
       },
       { path: "board/:userKey", element: <Board /> },
+      { path: "board/:userKey/notes/:id", element: <UpdateNote /> },
     ],
   },
 ]);
