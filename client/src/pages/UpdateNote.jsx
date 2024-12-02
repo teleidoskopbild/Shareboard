@@ -10,7 +10,11 @@ const UpdateNote = () => {
     title: "",
     description: "",
     priority: "",
+    columnId: "",
   });
+
+  const [columns, setColumns] = useState([]);
+  const [selectedColumn, setSelectedColumn] = useState("");
 
   console.log("userKey in UpdateNote:", userKey);
 
@@ -18,12 +22,21 @@ const UpdateNote = () => {
     const fetchNote = async () => {
       const response = await fetch(`${backendUrl}/api/notes/${id}`);
       const data = await response.json();
-      console.log(data);
+      console.log("Note data:", data);
       setNote(data);
+      setSelectedColumn(data.columnId);
+    };
+
+    const fetchColumns = async () => {
+      const response = await fetch(`${backendUrl}/api/columns/user/${userKey}`);
+      const columnsData = await response.json();
+      setColumns(columnsData);
+      console.log("Columns data:", columnsData);
     };
 
     fetchNote();
-  }, [id]);
+    fetchColumns();
+  }, [id, userKey]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -63,6 +76,14 @@ const UpdateNote = () => {
     }
   };
 
+  const handleColumnChange = (e) => {
+    setSelectedColumn(e.target.value); // Update den `selectedColumn`-State
+    setNote((prevNote) => ({
+      ...prevNote,
+      columnId: e.target.value, // Die ausgewählte Spalte wird ebenfalls aktualisiert
+    }));
+  };
+
   return (
     <div>
       <h1>Notiz bearbeiten</h1>
@@ -96,6 +117,23 @@ const UpdateNote = () => {
             onChange={handleChange}
           />
         </div>
+        <div>
+          <label htmlFor="column">Spalte</label>
+          <select
+            id="column"
+            name="columnId"
+            value={selectedColumn}
+            onChange={handleColumnChange}
+          >
+            <option value="">Bitte wählen</option>
+            {columns.map((column) => (
+              <option key={column.id} value={column.id}>
+                {column.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <button type="submit">Notiz aktualisieren</button>
       </form>
       <button onClick={handleDelete}>Notiz löschen</button>

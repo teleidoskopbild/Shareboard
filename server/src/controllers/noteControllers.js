@@ -44,12 +44,18 @@ export const createNote = async (req, res) => {
 // Eine Notiz aktualisieren
 export const updateNote = async (req, res) => {
   const { id } = req.params;
-  const { title, description, priority } = req.body;
+  const { title, description, priority, columnId } = req.body;
 
   try {
     const [updatedNote] = await db("shareboard_notes")
       .where("id", id)
-      .update({ title, description, priority, updated_at: db.fn.now() })
+      .update({
+        title,
+        description,
+        priority,
+        board_column_fk: columnId,
+        updated_at: db.fn.now(),
+      })
       .returning("*");
 
     res.json(updatedNote);
