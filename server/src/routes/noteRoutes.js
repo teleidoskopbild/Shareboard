@@ -20,7 +20,7 @@ router.get("/notes/:id", getNoteById);
 router.post("/notes", createNote);
 
 // Route für das Aktualisieren einer Notiz
-router.put("/notes/:id", updateNote);
+router.patch("/notes/:id", updateNote);
 
 // Route für das Löschen einer Notiz
 router.delete("/notes/:id", deleteNote);

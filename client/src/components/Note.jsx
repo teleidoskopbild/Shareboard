@@ -1,9 +1,19 @@
 import { useDraggable } from "@dnd-kit/core";
+import { useNavigate } from "react-router-dom";
 
-const Note = ({ note }) => {
+const Note = ({ note, userKey }) => {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: note.id,
   });
+
+  const navigate = useNavigate();
+
+  const handleUpdateClick = () => {
+    navigate(`/board/${userKey}/notes/${note.id}`);
+  };
+
+  console.log("userKey in Note:", userKey);
+  console.log(`/board/${userKey}/notes/${note.id}`);
 
   return (
     <div
@@ -20,6 +30,7 @@ const Note = ({ note }) => {
     >
       <h4>{note.title}</h4>
       <p>{note.description}</p>
+      <button onClick={handleUpdateClick}>Update</button>
     </div>
   );
 };
