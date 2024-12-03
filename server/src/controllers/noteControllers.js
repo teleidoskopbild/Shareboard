@@ -20,6 +20,7 @@ export const createNote = async (req, res) => {
     description,
     user_fk,
     priority,
+    assignee,
   } = req.body;
 
   try {
@@ -31,6 +32,7 @@ export const createNote = async (req, res) => {
         description,
         user_fk,
         priority,
+        assignee,
       })
       .returning("*");
 
@@ -44,7 +46,15 @@ export const createNote = async (req, res) => {
 // Eine Notiz aktualisieren
 export const updateNote = async (req, res) => {
   const { id } = req.params;
-  const { title, description, priority, columnId } = req.body;
+  const { title, description, priority, columnId, assignee } = req.body;
+
+  console.log("Received data:", {
+    title,
+    description,
+    priority,
+    columnId,
+    assignee,
+  });
 
   try {
     const [updatedNote] = await db("shareboard_notes")
@@ -55,6 +65,7 @@ export const updateNote = async (req, res) => {
         priority,
         board_column_fk: columnId,
         updated_at: db.fn.now(),
+        assignee,
       })
       .returning("*");
 
