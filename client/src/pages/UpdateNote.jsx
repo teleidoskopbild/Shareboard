@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const UpdateNote = () => {
+  const location = useLocation();
+  const { shareboard_fk } = location.state;
   const { id, userKey } = useParams(); // Hole die ID der Notiz aus der URL
   const navigate = useNavigate();
   const [note, setNote] = useState({
@@ -18,7 +20,7 @@ const UpdateNote = () => {
   const [selectedColumn, setSelectedColumn] = useState("");
   const [users, setUsers] = useState([]);
 
-  console.log("userKey in UpdateNote:", userKey);
+  console.log("shareboard_fk:", shareboard_fk);
 
   useEffect(() => {
     const fetchNote = async () => {
@@ -162,6 +164,12 @@ const UpdateNote = () => {
         </div>
 
         <button type="submit">Notiz aktualisieren</button>
+        <div>
+          {" "}
+          <button type="button" onClick={() => navigate(-1)}>
+            Zurück ohne Änderungen
+          </button>
+        </div>
       </form>
       <button onClick={handleDelete}>Notiz löschen</button>
     </div>
