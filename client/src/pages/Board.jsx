@@ -82,12 +82,37 @@ export default function Board() {
           )
         );
 
-        // Log-Nachricht erstellen
-        setUserLog((prevLog) => [
-          ...prevLog,
-          `${activeNote.title} wurde verschoben nach ${
-            over.id
-          } um ${new Date().toLocaleTimeString()}`,
+        const fromColumn = boardData.columns.find(
+          (column) => column.id === draggedNote.board_column_fk
+        );
+        const toColumn = boardData.columns.find(
+          (column) => column.id === over.id
+        );
+
+        const currentUser = boardData.users.find(
+          (user) => user.shareboard_key === userKey
+        );
+
+        const logMessage = `Task - ${draggedNote.title} moved from ${fromColumn?.name} to ${toColumn?.name} by ${currentUser.name}`;
+        const logResponse = await fetch(`${backendUrl}/api/logs`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            shareboard_fk: draggedNote.shareboard_fk,
+            message: logMessage,
+          }),
+        });
+
+        if (!logResponse.ok) {
+          throw new Error("Fehler beim Erstellen des Logs.");
+        }
+
+        console.log("Log erfolgreich erstellt");
+        setUserLog((prevLogs) => [
+          { message: logMessage, timestamp: new Date() }, // Log-Eintrag hinzufügen
+          ...prevLogs,
         ]);
       } catch (error) {
         console.error("Fehler beim Verschieben der Notiz:", error.message);
@@ -132,14 +157,30 @@ export default function Board() {
         savedNote, // Die vom Backend zurückgegebene Notiz mit der ID
       ]);
 
+      const logMessage = `Task ${savedNote.title} created by ${currentUser.name}`;
+      const logResponse = await fetch(`${backendUrl}/api/logs`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          shareboard_fk: shareboard_fk,
+          message: logMessage,
+        }),
+      });
+
+      if (!logResponse.ok) {
+        throw new Error("Fehler beim Erstellen des Logs.");
+      }
+
+      console.log("Log erfolgreich erstellt");
+      setUserLog((prevLogs) => [
+        { message: logMessage, timestamp: new Date() }, // Log-Eintrag hinzufügen
+        ...prevLogs,
+      ]);
+
       setNewTitle(""); // Eingabefelder zurücksetzen
       setNewDescription("");
-
-      // Log-Nachricht erstellen
-      setUserLog((prevLog) => [
-        ...prevLog,
-        `Neue Notiz "${newTitle}" wurde um ${new Date().toLocaleTimeString()} erstellt`,
-      ]);
     } catch (error) {
       console.error("Fehler beim Erstellen der Notiz:", error.message);
     }
@@ -155,6 +196,7 @@ export default function Board() {
         const data = await response.json();
         setBoardData(data); // Speichere die Daten im State
         setNotes(data.notes);
+        setUserLog(data.logs);
 
         console.log("Board-Daten:", data); // Daten in der Konsole anzeigen
       } catch (err) {
@@ -231,9 +273,21 @@ export default function Board() {
       <div>
         <h3>User Log</h3>
         <ul>
-          {userLog.map((log, index) => (
-            <li key={index}>{log}</li>
-          ))}
+          {userLog.map((log, index) => {
+            const timestamp = new Date(log.timestamp);
+            const formattedTime = timestamp.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+
+            return (
+              <li key={index}>
+                <p>
+                  {log.message} um {formattedTime}
+                </p>
+              </li>
+            );
+          })}
         </ul>
       </div>
 

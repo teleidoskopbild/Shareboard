@@ -53,6 +53,9 @@ export default function Settings() {
     e.preventDefault();
 
     const updatedUser = { name: editUserName, email: editUserEmail };
+    const oldUserName = boardData.users.find(
+      (user) => user.id === editUserId
+    )?.name; // Den alten Namen herausfinden
 
     try {
       const response = await fetch(
@@ -76,6 +79,24 @@ export default function Settings() {
               : user
           ),
         }));
+
+        const logMessage = `User ${oldUserName} umbenannt in ${editUserName}`;
+        const logResponse = await fetch(`${backendUrl}/api/logs`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            shareboard_fk: shareboardId,
+            message: logMessage,
+          }),
+        });
+
+        if (!logResponse.ok) {
+          throw new Error("Fehler beim Erstellen des Logs");
+        }
+
+        console.log("Log erfolgreich erstellt");
 
         setEditUserId(null); // Bearbeitung zurücksetzen
         setEditUserName(""); // Eingabefeld zurücksetzen
@@ -114,6 +135,24 @@ export default function Settings() {
         }); // Board-Daten neu laden
         setNewUserName(""); // Formular zurücksetzen
         setNewUserEmail(""); // Formular zurücksetzen
+
+        const logMessage = `User - ${newUserName} erstellt`;
+        const logResponse = await fetch(`${backendUrl}/api/logs`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            shareboard_fk: shareboardId,
+            message: logMessage,
+          }),
+        });
+
+        if (!logResponse.ok) {
+          throw new Error("Fehler beim Erstellen des Logs");
+        }
+
+        console.log("Log erfolgreich erstellt");
       } else {
         setNewUserName("");
         setNewUserEmail("");
@@ -125,6 +164,8 @@ export default function Settings() {
   };
 
   const handleDeleteUser = async (userId) => {
+    const userToDelete = boardData.users.find((user) => user.id === userId); // Benutzer anhand der ID finden
+    const userName = userToDelete ? userToDelete.name : "Unbekannt"; // Falls der Benutzer gefunden wird, den Namen verwenden
     try {
       const response = await fetch(
         `${backendUrl}/api/settings/${shareboardId}/${ownerKey}/users/${userId}`,
@@ -139,6 +180,23 @@ export default function Settings() {
           ...prevData,
           users: prevData.users.filter((user) => user.id !== userId),
         }));
+        const logMessage = `User - ${userName} gelöscht`;
+        const logResponse = await fetch(`${backendUrl}/api/logs`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            shareboard_fk: shareboardId,
+            message: logMessage,
+          }),
+        });
+
+        if (!logResponse.ok) {
+          throw new Error("Fehler beim Erstellen des Logs");
+        }
+
+        console.log("Log erfolgreich erstellt");
       } else {
         const errorData = await response.json();
         console.log(errorData.message); // Fehler anzeigen

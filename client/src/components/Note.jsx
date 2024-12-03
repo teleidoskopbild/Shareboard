@@ -9,7 +9,9 @@ const Note = ({ note, userKey }) => {
   const navigate = useNavigate();
 
   const handleUpdateClick = () => {
-    navigate(`/board/${userKey}/notes/${note.id}`);
+    navigate(`/board/${userKey}/notes/${note.id}`, {
+      state: { shareboard_fk: note.shareboard_fk },
+    });
   };
 
   return (
@@ -27,6 +29,7 @@ const Note = ({ note, userKey }) => {
     >
       <h4>{note.title}</h4>
       <p>{note.description}</p>
+      <p> wird bearbeitet von {note.assignee}</p>
       <button onClick={handleUpdateClick}>Update</button>
     </div>
   );

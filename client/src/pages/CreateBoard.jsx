@@ -40,6 +40,24 @@ function CreateBoard() {
       const result = await response.json();
       console.log("Shareboard erstellt:", result);
 
+      const logMessage = `Board - ${boardData.boardName} erstellt von ${boardData.ownerName}`;
+      const logResponse = await fetch(`${backendUrl}/api/logs`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          shareboard_fk: result.newShareboard.id,
+          message: logMessage,
+        }),
+      });
+
+      if (!logResponse.ok) {
+        throw new Error("Fehler beim Erstellen des Logs");
+      }
+
+      console.log("Log erfolgreich erstellt");
+
       // Nach der erfolgreichen Erstellung des Boards auf die Settings-Seite umleiten
       // Ergebnis enthält den `shareboardId` und den `ownerKey`
       navigate(
