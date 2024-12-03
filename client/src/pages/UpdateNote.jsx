@@ -11,10 +11,12 @@ const UpdateNote = () => {
     description: "",
     priority: "",
     columnId: "",
+    assignee: "",
   });
 
   const [columns, setColumns] = useState([]);
   const [selectedColumn, setSelectedColumn] = useState("");
+  const [users, setUsers] = useState([]);
 
   console.log("userKey in UpdateNote:", userKey);
 
@@ -34,8 +36,15 @@ const UpdateNote = () => {
       console.log("Columns data:", columnsData);
     };
 
+    const fetchUsers = async () => {
+      const response = await fetch(`${backendUrl}/api/board/${userKey}/users`);
+      const usersData = await response.json();
+      setUsers(usersData);
+    };
+
     fetchNote();
     fetchColumns();
+    fetchUsers();
   }, [id, userKey]);
 
   const handleChange = (e) => {
@@ -132,6 +141,24 @@ const UpdateNote = () => {
               </option>
             ))}
           </select>
+        </div>
+
+        <div>
+          <label htmlFor="assignee">Zuweisung</label>
+          <select
+            id="assignee"
+            name="assignee"
+            value={note.assignee}
+            onChange={handleChange}
+          >
+            <option value="nobody assigned">Nobody assigned</option>
+            {users.map((user) => (
+              <option key={user.id} value={user.name}>
+                {user.name}
+              </option>
+            ))}
+          </select>
+          <p>Assigned to: {note.assignee}</p>{" "}
         </div>
 
         <button type="submit">Notiz aktualisieren</button>

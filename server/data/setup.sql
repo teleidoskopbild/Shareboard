@@ -34,6 +34,7 @@ CREATE TABLE shareboard_notes (
     description TEXT,
     user_fk INTEGER REFERENCES shareboard_users(id) ON DELETE SET NULL,
     priority INTEGER DEFAULT 0,
+    assignee VARCHAR(255) DEFAULT 'nobody assigned',
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
