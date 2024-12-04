@@ -18,22 +18,24 @@ const Note = ({ note, userKey, currentUserName }) => {
   console.log("note cun: ", currentUserName);
 
   return (
-    <div
-      onClick={(e) => console.debug(e)}
-      ref={setNodeRef}
-      {...listeners}
-      {...attributes}
-      style={{
-        border: "1px solid gray",
-        margin: "5px 0",
-        padding: "10px",
-        background: "#f9f9f9",
-        opacity: isDragging ? 0.5 : 1,
-      }}
-    >
-      <h4>{note.title}</h4>
-      <p>{note.description}</p>
-      <p> wird bearbeitet von {note.assignee}</p>
+    <div>
+      <div
+        onClick={(e) => console.debug(e)}
+        ref={setNodeRef}
+        {...listeners}
+        {...attributes}
+        style={{
+          border: "1px solid gray",
+          margin: "5px 0",
+          padding: "10px",
+          background: "#f9f9f9",
+          opacity: isDragging ? 0.5 : 1,
+        }}
+      >
+        <h4>{note.title}</h4>
+        <p>{note.description}</p>
+        <p> wird bearbeitet von {note.assignee}</p>
+      </div>{" "}
       <button onClick={handleUpdateClick}>Update</button>
     </div>
   );
