@@ -5,7 +5,8 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const UpdateNote = () => {
   const location = useLocation();
-  const { shareboard_fk } = location.state;
+  const { shareboard_fk, userName } = location.state;
+  console.log(userName);
   const { id, userKey } = useParams(); // Hole die ID der Notiz aus der URL
   const navigate = useNavigate();
   const [note, setNote] = useState({
@@ -19,8 +20,10 @@ const UpdateNote = () => {
   const [columns, setColumns] = useState([]);
   const [selectedColumn, setSelectedColumn] = useState("");
   const [users, setUsers] = useState([]);
+  const [originalNote, setOriginalNote] = useState(null);
 
   console.log("shareboard_fk:", shareboard_fk);
+  console.log("userName ", userName);
 
   useEffect(() => {
     const fetchNote = async () => {
@@ -29,6 +32,7 @@ const UpdateNote = () => {
       console.log("Note data:", data);
       setNote(data);
       setSelectedColumn(data.columnId);
+      setOriginalNote(data);
     };
 
     const fetchColumns = async () => {
@@ -57,9 +61,69 @@ const UpdateNote = () => {
     }));
   };
 
+  console.log("n: ", note);
+  console.log("on: ", originalNote);
+
   const handleUpdate = async (e) => {
     e.preventDefault();
 
+    let logMessage = "";
+    // Überprüfen, ob sich der Titel geändert hat
+    if (note.title !== originalNote.title) {
+      logMessage += `Notiz geändert: Titel von "${originalNote.title}" zu "${note.title}" von ${userName} `;
+    }
+
+    // Wenn sich die Spalte ändert, nur dann loggen
+    // if (note.columnId !== originalNote.columnId) {
+    //   logMessage += `Task  ${note.title} was moved from ${originalNote.board_column_fk} to ${note.columnId} by ${userName}`;
+    // }
+
+    console.log("Columns:", columns);
+    console.log("Original Column ID:", originalNote.board_column_fk);
+    console.log("New Column ID:", note.columnId);
+
+    // Funktion, um den Spaltennamen basierend auf der columnId zu finden
+    const getColumnNameById = (id) => {
+      const column = columns.find((col) => col.id == id);
+      console.log(" column inside: ", column);
+      return column ? column.name : "Unbekannte Spalte";
+    };
+
+    // Wenn sich die Spalte ändert, nur dann loggen
+    if (note.columnId !== originalNote.columnId) {
+      const originalColumnName = getColumnNameById(
+        originalNote.board_column_fk
+      );
+      const newColumnName = getColumnNameById(note.columnId);
+      logMessage += `Task ${note.title} was moved from ${originalColumnName} to ${newColumnName} by ${userName}`;
+    }
+
+    // Wenn sich der Assignee geändert hat, logge es
+    if (note.assignee !== originalNote.assignee) {
+      logMessage += `Task ${note.title} was assigned to ${note.assignee} by ${userName}`;
+    }
+
+    // Wenn es eine Änderung gibt, erstelle das Log
+    if (logMessage) {
+      const logResponse = await fetch(`${backendUrl}/api/logs`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          shareboard_fk,
+          message: logMessage,
+        }),
+      });
+
+      if (!logResponse.ok) {
+        throw new Error("Fehler beim Erstellen des Logs");
+      }
+
+      console.log("Log erfolgreich erstellt");
+    }
+
+    // Notiz aktualisieren
     const response = await fetch(`${backendUrl}/api/notes/${id}`, {
       method: "PATCH",
       headers: {
@@ -76,11 +140,33 @@ const UpdateNote = () => {
   };
 
   const handleDelete = async () => {
+    const noteToDelete = note.title;
+
     const response = await fetch(`${backendUrl}/api/notes/${id}`, {
       method: "DELETE",
     });
 
     if (response.ok) {
+      const logMessage = `${noteToDelete} was deleted by ${userName}`;
+
+      // Log an das Backend senden
+      const logResponse = await fetch(`${backendUrl}/api/logs`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          shareboard_fk, // Übernimm den Wert von `shareboard_fk`, den du über `location.state` bekommst
+          message: logMessage,
+        }),
+      });
+
+      if (!logResponse.ok) {
+        throw new Error("Fehler beim Erstellen des Logs");
+      }
+
+      console.log("Log erfolgreich erstellt");
+
       navigate(`/board/${userKey}`); // Nach dem Löschen zurück zur Notiz-Seite navigieren
     } else {
       console.error("Fehler beim Löschen der Notiz");
@@ -94,6 +180,8 @@ const UpdateNote = () => {
       columnId: e.target.value, // Die ausgewählte Spalte wird ebenfalls aktualisiert
     }));
   };
+
+  console.log("Location state:", location.state);
 
   return (
     <div>

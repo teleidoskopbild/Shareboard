@@ -1,21 +1,25 @@
 import { useDraggable } from "@dnd-kit/core";
 import { useNavigate } from "react-router-dom";
 
-const Note = ({ note, userKey }) => {
+const Note = ({ note, userKey, currentUserName }) => {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: note.id,
   });
 
   const navigate = useNavigate();
 
-  const handleUpdateClick = () => {
+  const handleUpdateClick = (e) => {
+    console.debug(e);
     navigate(`/board/${userKey}/notes/${note.id}`, {
-      state: { shareboard_fk: note.shareboard_fk },
+      state: { shareboard_fk: note.shareboard_fk, userName: currentUserName },
     });
   };
 
+  console.log("note cun: ", currentUserName);
+
   return (
     <div
+      onClick={(e) => console.debug(e)}
       ref={setNodeRef}
       {...listeners}
       {...attributes}

@@ -18,7 +18,6 @@ export default function Board() {
   const [userLog, setUserLog] = useState([]);
 
   const navigate = useNavigate();
-
   const handleNavigateToSettings = () => {
     // Navigiere zurück zur Settings-Seite mit den entsprechenden Parametern
     navigate(`/settings/${boardData.board.id}/${userKey}`);
@@ -89,31 +88,34 @@ export default function Board() {
           (column) => column.id === over.id
         );
 
-        const currentUser = boardData.users.find(
-          (user) => user.shareboard_key === userKey
-        );
+        // Prüfen, ob sich die Spalte geändert hat
+        if (fromColumn?.name !== toColumn?.name) {
+          const currentUser = boardData.users.find(
+            (user) => user.shareboard_key === userKey
+          );
 
-        const logMessage = `Task - ${draggedNote.title} moved from ${fromColumn?.name} to ${toColumn?.name} by ${currentUser.name}`;
-        const logResponse = await fetch(`${backendUrl}/api/logs`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            shareboard_fk: draggedNote.shareboard_fk,
-            message: logMessage,
-          }),
-        });
+          const logMessage = `Task - ${draggedNote.title} moved from ${fromColumn.name} to ${toColumn.name} by ${currentUser.name}`;
+          const logResponse = await fetch(`${backendUrl}/api/logs`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              shareboard_fk: draggedNote.shareboard_fk,
+              message: logMessage,
+            }),
+          });
 
-        if (!logResponse.ok) {
-          throw new Error("Fehler beim Erstellen des Logs.");
+          if (!logResponse.ok) {
+            throw new Error("Fehler beim Erstellen des Logs.");
+          }
+
+          console.log("Log erfolgreich erstellt");
+          setUserLog((prevLogs) => [
+            { message: logMessage, timestamp: new Date() },
+            ...prevLogs,
+          ]);
         }
-
-        console.log("Log erfolgreich erstellt");
-        setUserLog((prevLogs) => [
-          { message: logMessage, timestamp: new Date() }, // Log-Eintrag hinzufügen
-          ...prevLogs,
-        ]);
       } catch (error) {
         console.error("Fehler beim Verschieben der Notiz:", error.message);
       }
@@ -126,6 +128,8 @@ export default function Board() {
     const currentUser = boardData.users.find(
       (user) => user.shareboard_key === userKey
     );
+    console.log("cu: ", currentUser);
+    console.log("uk: ", userKey);
 
     const newNote = {
       title: newTitle,
@@ -215,6 +219,12 @@ export default function Board() {
     return <h1>Board wird geladen...</h1>;
   }
 
+  const currentUserName =
+    boardData.users.find((user) => user.shareboard_key === userKey)?.name ||
+    "Unbekannt";
+
+  console.log("cun: ", currentUserName);
+
   return (
     <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
       {boardData.isOwner && (
@@ -267,6 +277,7 @@ export default function Board() {
             notes={notes.filter((note) => note.board_column_fk === column.id)} // Notizen der Spalte aus dem Zwischenzustand
             columnId={column.id}
             userKey={userKey}
+            currentUserName={currentUserName}
           />
         ))}
       </div>
@@ -292,7 +303,13 @@ export default function Board() {
       </div>
 
       <DragOverlay>
-        {activeNote ? <Note note={activeNote} userKey={userKey} /> : null}{" "}
+        {activeNote ? (
+          <Note
+            note={activeNote}
+            userKey={userKey}
+            currentUserName={currentUserName}
+          />
+        ) : null}{" "}
         {/* Overlay für das dragged Element */}
       </DragOverlay>
     </DndContext>

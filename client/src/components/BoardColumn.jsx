@@ -1,12 +1,11 @@
 import { useDroppable } from "@dnd-kit/core";
 import Note from "./Note";
 
-const BoardColumn = ({ title, notes, columnId, userKey }) => {
+const BoardColumn = ({ title, notes, columnId, userKey, currentUserName }) => {
   const { setNodeRef, isOver } = useDroppable({
     id: columnId,
   });
-  console.log(title);
-  console.log("userKey in Board:", userKey);
+  console.log("board cun: ", currentUserName);
 
   return (
     <div
@@ -22,7 +21,12 @@ const BoardColumn = ({ title, notes, columnId, userKey }) => {
     >
       <h3>{title}</h3>
       {notes.map((note) => (
-        <Note key={note.id} note={note} userKey={userKey} />
+        <Note
+          key={note.id}
+          note={note}
+          userKey={userKey}
+          currentUserName={currentUserName}
+        />
       ))}
     </div>
   );
