@@ -70,52 +70,53 @@ function CreateBoard() {
   };
 
   return (
-    <div>
-      <h2>Create a New Board</h2>
-      <p>Chosen Layout: {selectedLayout.name}</p>
+    <div className="flex flex-col items-center p-4 md:p-8">
+      <h2 className="text-3xl md:text-4xl font-bold mb-4">
+        Create a New Board
+      </h2>
+      <p className="text-lg mb-6">Chosen Layout: {selectedLayout.name}</p>
 
-      {/* Zeigt die Spalten des ausgewählten Layouts an */}
-      {/* <div>
-        <h3>Board Columns:</h3>
-        <ul>
-          {selectedLayout.columns.length > 0 ? (
-            selectedLayout.columns.map((column, index) => (
-              <li key={index}>{column.name}</li>
-            ))
-          ) : (
-            <p>Freestyle – no predefined columns</p>
-          )}
-        </ul>
-      </div> */}
-
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Board Name:</label>
+      <form onSubmit={handleSubmit} className="w-full max-w-lg">
+        <div className="mb-4">
+          <label className="block text-lg font-medium mb-2">Board Name:</label>
           <input
             type="text"
             value={boardName}
             onChange={(e) => setBoardName(e.target.value)}
             required
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-        <div>
-          <label>Owner Name:</label>
+
+        <div className="mb-4">
+          <label className="block text-lg font-medium mb-2">Owner Name:</label>
           <input
             type="text"
             value={ownerName}
             onChange={(e) => setOwnerName(e.target.value)}
             required
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-        <div>
-          <label>Owner Email (optional):</label>
+
+        <div className="mb-4">
+          <label className="block text-lg font-medium mb-2">
+            Owner Email (optional):
+          </label>
           <input
             type="email"
             value={ownerEmail}
             onChange={(e) => setOwnerEmail(e.target.value)}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-        <button type="submit">Create Board</button>
+
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200"
+        >
+          Create Board
+        </button>
       </form>
     </div>
   );

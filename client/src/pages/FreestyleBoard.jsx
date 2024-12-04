@@ -20,35 +20,55 @@ function FreestyleBoard() {
   };
 
   return (
-    <div>
-      <h2>Create your own Layout</h2>
+    <div className="p-4 md:p-8">
+      <h2 className="text-3xl font-bold mb-6">Create your own Layout</h2>
 
-      <div>
-        <label htmlFor="newColumn">Column Name:</label>
+      <div className="mb-6">
+        <label htmlFor="newColumn" className="block text-lg font-medium mb-2">
+          Column Name:
+        </label>
         <input
           id="newColumn"
           type="text"
           value={newColumnName}
           onChange={(e) => setNewColumnName(e.target.value)}
           placeholder="Spaltenname eingeben"
+          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <button onClick={addColumn}>Add Column</button>
+        <button
+          onClick={addColumn}
+          className="mt-2 bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200"
+        >
+          Add Column
+        </button>
       </div>
 
-      <ul>
+      <ul className="space-y-4 mb-6">
         {columns.map((column, index) => (
-          <li key={index}>
-            {column.name}{" "}
-            <button onClick={() => removeColumn(index)}>Remove</button>
+          <li
+            key={index}
+            className="bg-gray-100 p-4 rounded-lg shadow-sm flex justify-between items-center"
+          >
+            <span>{column.name}</span>
+            <button
+              onClick={() => removeColumn(index)}
+              className="bg-red-500 text-white py-1 px-4 rounded-md hover:bg-red-600 transition duration-200"
+            >
+              Remove
+            </button>
           </li>
         ))}
       </ul>
+
       {columns.length > 0 && (
         <Link
           to="/createboard"
           state={{ layout: { name: "FreestyleBoard", columns } }}
+          className="inline-block mt-6"
         >
-          <button>Continue</button>
+          <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200">
+            Continue
+          </button>
         </Link>
       )}
     </div>

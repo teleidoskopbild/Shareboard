@@ -18,25 +18,26 @@ const Note = ({ note, userKey, currentUserName }) => {
   console.log("note cun: ", currentUserName);
 
   return (
-    <div style={{ border: "0px solid gray" }}>
+    <div className="border-0">
       <div
         onClick={(e) => console.debug(e)}
         ref={setNodeRef}
         {...listeners}
         {...attributes}
-        style={{
-          border: "1px solid gray",
-          margin: "5px 0",
-          padding: "10px",
-          background: "#f9f9f9",
-          opacity: isDragging ? 0.5 : 1,
-        }}
+        className={`border border-gray-300 p-4 mb-2 bg-gray-50 ${
+          isDragging ? "opacity-50" : "opacity-100"
+        } transition-opacity`}
       >
-        <h4>{note.title}</h4>
-        <p>{note.description}</p>
-        <p> assigned to {note.assignee}</p>
-      </div>{" "}
-      <button onClick={handleUpdateClick}>Update</button>
+        <h4 className="text-xl font-semibold">{note.title}</h4>
+        <p className="text-gray-700">{note.description}</p>
+        <p className="text-gray-600">Assigned to {note.assignee}</p>
+      </div>
+      <button
+        onClick={handleUpdateClick}
+        className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200"
+      >
+        Update
+      </button>
     </div>
   );
 };

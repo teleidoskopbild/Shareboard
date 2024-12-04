@@ -236,88 +236,141 @@ export default function Settings() {
   console.log("Empfangene Daten in Settings:", boardData);
 
   return (
-    <div>
-      <h1>Boardname: {boardData.boardName}</h1>
-      <p>Boardowner: {boardData.ownerName}</p>
-      <p>Your personal Owner Key: {boardData.ownerKey}</p>
-      <h2>Add a User</h2>
-      <form onSubmit={handleAddUser}>
-        <div>
-          <label>Name of the new User:</label>
+    <div className="p-4 md:p-8">
+      <h1 className="text-3xl font-bold mb-4">
+        Boardname: {boardData.boardName}
+      </h1>
+      <p className="text-lg mb-4">Boardowner: {boardData.ownerName}</p>
+      <p className="text-lg mb-6">
+        Your personal Owner Key: {boardData.ownerKey}
+      </p>
+
+      <h2 className="text-2xl font-semibold mb-4">Add a User</h2>
+      <form onSubmit={handleAddUser} className="mb-6">
+        <div className="mb-4">
+          <label className="block text-lg font-medium mb-2">
+            Name of the new User:
+          </label>
           <input
             type="text"
             value={newUserName}
             onChange={(e) => setNewUserName(e.target.value)}
             required
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-        <div>
-          <label>E-Mail of the new User (optional):</label>
+        <div className="mb-4">
+          <label className="block text-lg font-medium mb-2">
+            E-Mail of the new User (optional):
+          </label>
           <input
             type="email"
             value={newUserEmail}
             onChange={(e) => setNewUserEmail(e.target.value)}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-        <button type="submit">Add User</button>
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200"
+        >
+          Add User
+        </button>
       </form>
-      <h2>Board Users</h2>
-      <ul>
-        {boardData.users
-          .filter((user) => {
-            return user.rights === false;
-          })
 
+      <h2 className="text-2xl font-semibold mb-4">Board Users</h2>
+      <ul className="space-y-4">
+        {boardData.users
+          .filter((user) => !user.rights)
           .map((user) => (
-            <li key={user.id}>
-              {user.name} {user.email ? `(${user.email})` : "(Keine E-Mail)"}
-              <br />
-              Key: {user.shareboardKey}
-              {/* Bearbeitungsformular nur anzeigen, wenn der Benutzer bearbeitet wird */}
+            <li key={user.id} className="bg-gray-100 p-4 rounded-lg shadow-sm">
+              <div>
+                <span className="font-semibold">{user.name}</span>
+                {user.email ? ` (${user.email})` : " (Keine E-Mail)"}
+              </div>
+              <div>Key: {user.shareboardKey}</div>
+
               {editUserId === user.id ? (
-                <form onSubmit={handleSaveUser}>
-                  <div>
-                    <label>New Name:</label>
+                <form onSubmit={handleSaveUser} className="mt-4">
+                  <div className="mb-4">
+                    <label className="block text-lg font-medium mb-2">
+                      New Name:
+                    </label>
                     <input
                       type="text"
                       value={editUserName}
                       onChange={(e) => setEditUserName(e.target.value)}
                       required
+                      className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
-                  <div>
-                    <label>New E-Mail:</label>
+                  <div className="mb-4">
+                    <label className="block text-lg font-medium mb-2">
+                      New E-Mail:
+                    </label>
                     <input
                       type="email"
                       value={editUserEmail}
                       onChange={(e) => setEditUserEmail(e.target.value)}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
-                  <button type="submit">Save</button>
-                  <button onClick={() => setEditUserId(null)}>Cancel</button>
+                  <button
+                    type="submit"
+                    className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200"
+                  >
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setEditUserId(null)}
+                    className="ml-4 bg-gray-300 text-black py-2 px-6 rounded-md hover:bg-gray-400 transition duration-200"
+                  >
+                    Cancel
+                  </button>
                 </form>
               ) : (
-                <div>
-                  <button onClick={() => handleEditUser(user)}>Edit</button>
-                  <button onClick={() => handleDeleteUser(user.id)}>
+                <div className="flex space-x-4 mt-4">
+                  <button
+                    onClick={() => handleEditUser(user)}
+                    className="bg-yellow-500 text-white py-2 px-6 rounded-md hover:bg-yellow-600 transition duration-200"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDeleteUser(user.id)}
+                    className="bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600 transition duration-200"
+                  >
                     Delete
                   </button>
                 </div>
               )}
             </li>
           ))}
-      </ul>{" "}
-      <div>
-        <button onClick={handleNavigateToBoard}>Go to Board</button>
+      </ul>
+
+      <div className="mt-8">
+        <button
+          onClick={handleNavigateToBoard}
+          className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200"
+        >
+          Go to Board
+        </button>
       </div>
+
       {boardData.ownerKey === ownerKey && (
-        <div>
-          <h2>Delete Board</h2>
-          <p>
+        <div className="mt-8 bg-red-100 p-6 rounded-lg shadow-md">
+          <h2 className="text-2xl font-semibold mb-4">Delete Board</h2>
+          <p className="mb-4">
             Are you sure you want to delete the entire board, including all
             users and data?
           </p>
-          <button onClick={handleDeleteBoard}>Delete Board</button>
+          <button
+            onClick={handleDeleteBoard}
+            className="bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600 transition duration-200"
+          >
+            Delete Board
+          </button>
         </div>
       )}
     </div>

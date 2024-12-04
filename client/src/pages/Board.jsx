@@ -222,61 +222,78 @@ export default function Board() {
 
   return (
     <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
+      {/* Zurück zur Einstellung für den Besitzer */}
       {boardData.isOwner && (
-        <div>
-          <button onClick={handleNavigateToSettings}>Back to Settings</button>
+        <div className="mb-4">
+          <button
+            onClick={handleNavigateToSettings}
+            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+          >
+            Back to Settings
+          </button>
         </div>
       )}
-      <div>
-        <h1>{boardData.board.name}</h1> {/* Boardname anzeigen */}
-        <h2>Board Users:</h2>
-        <ul>
+
+      {/* Board-Titel und Benutzerliste */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold mb-4">{boardData.board.name}</h1>
+        <h2 className="text-xl font-semibold mb-2">Board Users:</h2>
+        <ul className="list-disc ml-6">
           {boardData.users.map((user) => (
-            <li key={user.id}>{user.name}</li> // Nutzer anzeigen
+            <li key={user.id} className="text-gray-700">
+              {user.name}
+            </li>
           ))}
         </ul>
       </div>
+
+      {/* Task hinzufügen */}
       <form
         onSubmit={handleSubmit}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          width: "300px",
-          gap: "10px",
-          margin: "20px",
-        }}
+        className="bg-white shadow-md rounded-lg p-6 mb-8 w-full max-w-md"
       >
+        <h3 className="text-lg font-semibold mb-4">Add a Task</h3>
         <input
           type="text"
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
-          placeholder="Titel"
+          placeholder="Title"
+          className="border border-gray-300 rounded-lg p-2 w-full mb-4"
           required
         />
         <textarea
           value={newDescription}
           onChange={(e) => setNewDescription(e.target.value)}
-          placeholder="Beschreibung"
+          placeholder="Description"
+          className="border border-gray-300 rounded-lg p-2 w-full mb-4"
           required
         />
-        <button type="submit">Add a Task</button>
+        <button
+          type="submit"
+          className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+        >
+          Add Task
+        </button>
       </form>
-      <div style={{ display: "flex", gap: "20px" }}>
-        {/* Dynamisches Rendern der Spalten */}
+
+      {/* Spaltenbereich */}
+      <div className="flex flex-wrap gap-4">
         {boardData.columns.map((column) => (
           <BoardColumn
             key={column.id}
-            title={column.name} // Titel der Spalte
-            notes={notes.filter((note) => note.board_column_fk === column.id)} // Notizen der Spalte aus dem Zwischenzustand
+            title={column.name}
+            notes={notes.filter((note) => note.board_column_fk === column.id)}
             columnId={column.id}
             userKey={userKey}
             currentUserName={currentUserName}
           />
         ))}
       </div>
-      <div>
-        <h3>User Log</h3>
-        <ul>
+
+      {/* Benutzer-Log */}
+      <div className="mt-8">
+        <h3 className="text-lg font-semibold mb-4">User Log</h3>
+        <ul className="space-y-2">
           {userLog.map((log, index) => {
             const timestamp = new Date(log.timestamp);
             const formattedTime = timestamp.toLocaleTimeString([], {
@@ -285,9 +302,10 @@ export default function Board() {
             });
 
             return (
-              <li key={index}>
+              <li key={index} className="text-gray-600">
                 <p>
-                  {log.message} at {formattedTime}
+                  {log.message} at{" "}
+                  <span className="font-medium">{formattedTime}</span>
                 </p>
               </li>
             );
@@ -295,6 +313,7 @@ export default function Board() {
         </ul>
       </div>
 
+      {/* Drag Overlay */}
       <DragOverlay>
         {activeNote ? (
           <Note
@@ -302,8 +321,7 @@ export default function Board() {
             userKey={userKey}
             currentUserName={currentUserName}
           />
-        ) : null}{" "}
-        {/* Overlay für das dragged Element */}
+        ) : null}
       </DragOverlay>
     </DndContext>
   );

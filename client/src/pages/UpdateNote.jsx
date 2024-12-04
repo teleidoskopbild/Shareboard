@@ -184,45 +184,50 @@ const UpdateNote = () => {
   console.log("Location state:", location.state);
 
   return (
-    <div>
-      <h1>Edit Task</h1>
-      <form onSubmit={handleUpdate}>
+    <div className="p-6 md:p-8 max-w-4xl mx-auto">
+      <h1 className="text-3xl font-bold mb-6">Edit Task</h1>
+
+      <form onSubmit={handleUpdate} className="space-y-6">
         <div>
-          <label htmlFor="title">Title</label>
+          <label htmlFor="title" className="block text-lg font-medium mb-2">
+            Title
+          </label>
           <input
             type="text"
             id="title"
             name="title"
             value={note.title}
             onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
+
         <div>
-          <label htmlFor="description">Description</label>
+          <label
+            htmlFor="description"
+            className="block text-lg font-medium mb-2"
+          >
+            Description
+          </label>
           <textarea
             id="description"
             name="description"
             value={note.description}
             onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-        {/* <div>
-          <label htmlFor="priority">Priority</label>
-          <input
-            type="text"
-            id="priority"
-            name="priority"
-            value={note.priority}
-            onChange={handleChange}
-          />
-        </div> */}
+
         <div>
-          <label htmlFor="column">Column</label>
+          <label htmlFor="column" className="block text-lg font-medium mb-2">
+            Column
+          </label>
           <select
             id="column"
             name="columnId"
             value={selectedColumn}
             onChange={handleColumnChange}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">Select:</option>
             {columns.map((column) => (
@@ -234,12 +239,15 @@ const UpdateNote = () => {
         </div>
 
         <div>
-          <label htmlFor="assignee">Assign:</label>
+          <label htmlFor="assignee" className="block text-lg font-medium mb-2">
+            Assign:
+          </label>
           <select
             id="assignee"
             name="assignee"
             value={note.assignee}
             onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="nobody assigned">Nobody assigned</option>
             {users.map((user) => (
@@ -248,18 +256,34 @@ const UpdateNote = () => {
               </option>
             ))}
           </select>
-          <p>Assigned to: {note.assignee}</p>{" "}
+          <p className="mt-2">Assigned to: {note.assignee}</p>
         </div>
 
-        <button type="submit">Update Task</button>
-        <div>
-          {" "}
-          <button type="button" onClick={() => navigate(-1)}>
+        <div className="space-x-4">
+          <button
+            type="submit"
+            className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200"
+          >
+            Update Task
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate(-1)}
+            className="bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-200"
+          >
             Go Back without Changes
           </button>
         </div>
       </form>
-      <button onClick={handleDelete}>Delete Task</button>
+
+      <div className="mt-6">
+        <button
+          onClick={handleDelete}
+          className="bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600 transition duration-200"
+        >
+          Delete Task
+        </button>
+      </div>
     </div>
   );
 };
