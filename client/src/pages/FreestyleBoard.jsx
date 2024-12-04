@@ -21,10 +21,10 @@ function FreestyleBoard() {
 
   return (
     <div>
-      <h2>Freestyle Layout erstellen</h2>
+      <h2>Create your own Layout</h2>
 
       <div>
-        <label htmlFor="newColumn">Spaltenname:</label>
+        <label htmlFor="newColumn">Column Name:</label>
         <input
           id="newColumn"
           type="text"
@@ -32,14 +32,14 @@ function FreestyleBoard() {
           onChange={(e) => setNewColumnName(e.target.value)}
           placeholder="Spaltenname eingeben"
         />
-        <button onClick={addColumn}>Spalte hinzufügen</button>
+        <button onClick={addColumn}>Add Column</button>
       </div>
 
       <ul>
         {columns.map((column, index) => (
           <li key={index}>
             {column.name}{" "}
-            <button onClick={() => removeColumn(index)}>Entfernen</button>
+            <button onClick={() => removeColumn(index)}>Remove</button>
           </li>
         ))}
       </ul>
@@ -48,7 +48,7 @@ function FreestyleBoard() {
           to="/createboard"
           state={{ layout: { name: "FreestyleBoard", columns } }}
         >
-          <button>Weiter</button>
+          <button>Continue</button>
         </Link>
       )}
     </div>

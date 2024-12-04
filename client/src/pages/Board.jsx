@@ -27,7 +27,7 @@ export default function Board() {
     const { active } = event;
     const note = notes.find((note) => note.id === active.id);
     if (!note) {
-      console.error("Keine Notiz mit der ID gefunden:", active.id);
+      console.error("Can not find Note with ID:", active.id);
       return;
     }
     setActiveNote(note);
@@ -42,7 +42,7 @@ export default function Board() {
       const draggedNote = notes.find((note) => note.id === active.id);
 
       if (!draggedNote) {
-        console.error("Keine Notiz mit der ID gefunden:", active.id);
+        console.error("Can not find Note with ID:", active.id);
         return;
       }
 
@@ -67,7 +67,7 @@ export default function Board() {
         );
 
         if (!response.ok) {
-          throw new Error("Fehler beim Aktualisieren der Notiz-Spalte.");
+          throw new Error("Error updating the note column.");
         }
 
         const updatedNote = await response.json();
@@ -94,7 +94,7 @@ export default function Board() {
             (user) => user.shareboard_key === userKey
           );
 
-          const logMessage = `Task - ${draggedNote.title} moved from ${fromColumn.name} to ${toColumn.name} by ${currentUser.name}`;
+          const logMessage = `Note - ${draggedNote.title} moved from ${fromColumn.name} to ${toColumn.name} by ${currentUser.name}`;
           const logResponse = await fetch(`${backendUrl}/api/logs`, {
             method: "POST",
             headers: {
@@ -107,17 +107,16 @@ export default function Board() {
           });
 
           if (!logResponse.ok) {
-            throw new Error("Fehler beim Erstellen des Logs.");
+            throw new Error("Error creating the log.");
           }
 
-          console.log("Log erfolgreich erstellt");
           setUserLog((prevLogs) => [
             { message: logMessage, timestamp: new Date() },
             ...prevLogs,
           ]);
         }
       } catch (error) {
-        console.error("Fehler beim Verschieben der Notiz:", error.message);
+        console.error("Error while moving the note:", error.message);
       }
     }
   };
@@ -150,7 +149,7 @@ export default function Board() {
       });
 
       if (!response.ok) {
-        throw new Error("Fehler beim Erstellen der Notiz.");
+        throw new Error("Error creating the log.");
       }
 
       const savedNote = await response.json(); // Hole die Notiz mit der ID zurück
@@ -174,10 +173,8 @@ export default function Board() {
       });
 
       if (!logResponse.ok) {
-        throw new Error("Fehler beim Erstellen des Logs.");
+        throw new Error("Error creating the log.");
       }
-
-      console.log("Log erfolgreich erstellt");
       setUserLog((prevLogs) => [
         { message: logMessage, timestamp: new Date() }, // Log-Eintrag hinzufügen
         ...prevLogs,
@@ -186,7 +183,7 @@ export default function Board() {
       setNewTitle(""); // Eingabefelder zurücksetzen
       setNewDescription("");
     } catch (error) {
-      console.error("Fehler beim Erstellen der Notiz:", error.message);
+      console.error("Error while creatingthe note:", error.message);
     }
   };
 
@@ -195,16 +192,14 @@ export default function Board() {
       try {
         const response = await fetch(`${backendUrl}/api/board/${userKey}`);
         if (!response.ok) {
-          throw new Error("Fehler beim Laden des Boards.");
+          throw new Error("Error loading the board.");
         }
         const data = await response.json();
         setBoardData(data); // Speichere die Daten im State
         setNotes(data.notes);
         setUserLog(data.logs);
-
-        console.log("Board-Daten:", data); // Daten in der Konsole anzeigen
       } catch (err) {
-        console.error("Fetch-Fehler:", err.message);
+        console.error("Fetch-Error:", err.message);
       }
     };
 
@@ -212,11 +207,11 @@ export default function Board() {
   }, [userKey]);
 
   if (error) {
-    return <h1>Fehler: {error}</h1>;
+    return <h1>Error: {error}</h1>;
   }
 
   if (!boardData) {
-    return <h1>Board wird geladen...</h1>;
+    return <h1>Loading BoardData...</h1>;
   }
 
   const currentUserName =
@@ -229,14 +224,12 @@ export default function Board() {
     <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
       {boardData.isOwner && (
         <div>
-          <button onClick={handleNavigateToSettings}>
-            Zurück zu den Einstellungen
-          </button>
+          <button onClick={handleNavigateToSettings}>Back to Settings</button>
         </div>
       )}
       <div>
         <h1>{boardData.board.name}</h1> {/* Boardname anzeigen */}
-        <h2>Board Nutzer:</h2>
+        <h2>Board Users:</h2>
         <ul>
           {boardData.users.map((user) => (
             <li key={user.id}>{user.name}</li> // Nutzer anzeigen
@@ -266,7 +259,7 @@ export default function Board() {
           placeholder="Beschreibung"
           required
         />
-        <button type="submit">Notiz hinzufügen</button>
+        <button type="submit">Add a Task</button>
       </form>
       <div style={{ display: "flex", gap: "20px" }}>
         {/* Dynamisches Rendern der Spalten */}
@@ -294,7 +287,7 @@ export default function Board() {
             return (
               <li key={index}>
                 <p>
-                  {log.message} um {formattedTime}
+                  {log.message} at {formattedTime}
                 </p>
               </li>
             );

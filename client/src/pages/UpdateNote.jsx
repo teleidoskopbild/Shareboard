@@ -185,10 +185,10 @@ const UpdateNote = () => {
 
   return (
     <div>
-      <h1>Notiz bearbeiten</h1>
+      <h1>Edit Task</h1>
       <form onSubmit={handleUpdate}>
         <div>
-          <label htmlFor="title">Titel</label>
+          <label htmlFor="title">Title</label>
           <input
             type="text"
             id="title"
@@ -198,7 +198,7 @@ const UpdateNote = () => {
           />
         </div>
         <div>
-          <label htmlFor="description">Beschreibung</label>
+          <label htmlFor="description">Description</label>
           <textarea
             id="description"
             name="description"
@@ -206,8 +206,8 @@ const UpdateNote = () => {
             onChange={handleChange}
           />
         </div>
-        <div>
-          <label htmlFor="priority">Priorität</label>
+        {/* <div>
+          <label htmlFor="priority">Priority</label>
           <input
             type="text"
             id="priority"
@@ -215,16 +215,16 @@ const UpdateNote = () => {
             value={note.priority}
             onChange={handleChange}
           />
-        </div>
+        </div> */}
         <div>
-          <label htmlFor="column">Spalte</label>
+          <label htmlFor="column">Column</label>
           <select
             id="column"
             name="columnId"
             value={selectedColumn}
             onChange={handleColumnChange}
           >
-            <option value="">Bitte wählen</option>
+            <option value="">Select:</option>
             {columns.map((column) => (
               <option key={column.id} value={column.id}>
                 {column.name}
@@ -234,7 +234,7 @@ const UpdateNote = () => {
         </div>
 
         <div>
-          <label htmlFor="assignee">Zuweisung</label>
+          <label htmlFor="assignee">Assign:</label>
           <select
             id="assignee"
             name="assignee"
@@ -251,15 +251,15 @@ const UpdateNote = () => {
           <p>Assigned to: {note.assignee}</p>{" "}
         </div>
 
-        <button type="submit">Notiz aktualisieren</button>
+        <button type="submit">Update Task</button>
         <div>
           {" "}
           <button type="button" onClick={() => navigate(-1)}>
-            Zurück ohne Änderungen
+            Go Back without Changes
           </button>
         </div>
       </form>
-      <button onClick={handleDelete}>Notiz löschen</button>
+      <button onClick={handleDelete}>Delete Task</button>
     </div>
   );
 };
