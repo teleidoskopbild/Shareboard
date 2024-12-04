@@ -9,20 +9,20 @@ export default function Login() {
       <h1>Login Page</h1>
       <form>
         <div>
-          <label htmlFor="key">Key eingeben:</label>
+          <label htmlFor="key">Enter your shareboard key: </label>
           <input
             id="key"
             type="text"
             value={key}
             onChange={(e) => setKey(e.target.value)}
-            placeholder="z. B. tm9ckk0gk"
+            placeholder=" e.g. tm9ckk0gk"
             required
           />
         </div>
 
         {key.trim() && (
           <Link to={`/board/${key}`}>
-            <button type="button">Zum Board</button>
+            <button type="button">Go to Board</button>
           </Link>
         )}
       </form>

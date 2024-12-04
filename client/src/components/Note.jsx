@@ -18,7 +18,7 @@ const Note = ({ note, userKey, currentUserName }) => {
   console.log("note cun: ", currentUserName);
 
   return (
-    <div>
+    <div style={{ border: "0px solid gray" }}>
       <div
         onClick={(e) => console.debug(e)}
         ref={setNodeRef}
@@ -34,7 +34,7 @@ const Note = ({ note, userKey, currentUserName }) => {
       >
         <h4>{note.title}</h4>
         <p>{note.description}</p>
-        <p> wird bearbeitet von {note.assignee}</p>
+        <p> assigned to {note.assignee}</p>
       </div>{" "}
       <button onClick={handleUpdateClick}>Update</button>
     </div>

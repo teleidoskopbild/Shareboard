@@ -47,12 +47,12 @@ function SelectBoard() {
       ))}
       {selectedLayout && selectedLayout.name === "Freestyle" && (
         <Link to="/freestyleboard">
-          <button>Weiter</button>
+          <button>Continue</button>
         </Link>
       )}
       {selectedLayout && selectedLayout.name !== "Freestyle" && (
         <Link to="/createboard" state={{ layout: selectedLayout }}>
-          <button>Weiter</button>
+          <button>Continue</button>
         </Link>
       )}
     </div>

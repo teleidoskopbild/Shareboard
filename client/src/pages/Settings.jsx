@@ -80,7 +80,7 @@ export default function Settings() {
           ),
         }));
 
-        const logMessage = `User ${oldUserName} umbenannt in ${editUserName}`;
+        const logMessage = `User ${oldUserName} renamed to ${editUserName}`;
         const logResponse = await fetch(`${backendUrl}/api/logs`, {
           method: "POST",
           headers: {
@@ -136,7 +136,7 @@ export default function Settings() {
         setNewUserName(""); // Formular zurücksetzen
         setNewUserEmail(""); // Formular zurücksetzen
 
-        const logMessage = `User - ${newUserName} erstellt`;
+        const logMessage = `User - ${newUserName} was created`;
         const logResponse = await fetch(`${backendUrl}/api/logs`, {
           method: "POST",
           headers: {
@@ -180,7 +180,7 @@ export default function Settings() {
           ...prevData,
           users: prevData.users.filter((user) => user.id !== userId),
         }));
-        const logMessage = `User - ${userName} gelöscht`;
+        const logMessage = `User - ${userName} was deleted`;
         const logResponse = await fetch(`${backendUrl}/api/logs`, {
           method: "POST",
           headers: {
@@ -240,10 +240,10 @@ export default function Settings() {
       <h1>Boardname: {boardData.boardName}</h1>
       <p>Boardowner: {boardData.ownerName}</p>
       <p>Your personal Owner Key: {boardData.ownerKey}</p>
-      <h2>Benutzer Hinzufügen</h2>
+      <h2>Add a User</h2>
       <form onSubmit={handleAddUser}>
         <div>
-          <label>Name des neuen Benutzers:</label>
+          <label>Name of the new User:</label>
           <input
             type="text"
             value={newUserName}
@@ -252,16 +252,16 @@ export default function Settings() {
           />
         </div>
         <div>
-          <label>E-Mail des neuen Benutzers (optional):</label>
+          <label>E-Mail of the new User (optional):</label>
           <input
             type="email"
             value={newUserEmail}
             onChange={(e) => setNewUserEmail(e.target.value)}
           />
         </div>
-        <button type="submit">Benutzer hinzufügen</button>
+        <button type="submit">Add User</button>
       </form>
-      <h2>Benutzer des Boards</h2>
+      <h2>Board Users</h2>
       <ul>
         {boardData.users
           .filter((user) => {
@@ -272,12 +272,12 @@ export default function Settings() {
             <li key={user.id}>
               {user.name} {user.email ? `(${user.email})` : "(Keine E-Mail)"}
               <br />
-              Schlüssel: {user.shareboardKey}
+              Key: {user.shareboardKey}
               {/* Bearbeitungsformular nur anzeigen, wenn der Benutzer bearbeitet wird */}
               {editUserId === user.id ? (
                 <form onSubmit={handleSaveUser}>
                   <div>
-                    <label>Neuer Name:</label>
+                    <label>New Name:</label>
                     <input
                       type="text"
                       value={editUserName}
@@ -286,23 +286,21 @@ export default function Settings() {
                     />
                   </div>
                   <div>
-                    <label>Neue E-Mail:</label>
+                    <label>New E-Mail:</label>
                     <input
                       type="email"
                       value={editUserEmail}
                       onChange={(e) => setEditUserEmail(e.target.value)}
                     />
                   </div>
-                  <button type="submit">Speichern</button>
-                  <button onClick={() => setEditUserId(null)}>Abbrechen</button>
+                  <button type="submit">Save</button>
+                  <button onClick={() => setEditUserId(null)}>Cancel</button>
                 </form>
               ) : (
                 <div>
-                  <button onClick={() => handleEditUser(user)}>
-                    Bearbeiten
-                  </button>
+                  <button onClick={() => handleEditUser(user)}>Edit</button>
                   <button onClick={() => handleDeleteUser(user.id)}>
-                    Löschen
+                    Delete
                   </button>
                 </div>
               )}
@@ -310,16 +308,16 @@ export default function Settings() {
           ))}
       </ul>{" "}
       <div>
-        <button onClick={handleNavigateToBoard}>Zu Board gehen</button>
+        <button onClick={handleNavigateToBoard}>Go to Board</button>
       </div>
       {boardData.ownerKey === ownerKey && (
         <div>
-          <h2>Board löschen</h2>
+          <h2>Delete Board</h2>
           <p>
-            Sind Sie sicher, dass Sie das gesamte Board inklusive aller Benutzer
-            und Daten löschen möchten?
+            Are you sure you want to delete the entire board, including all
+            users and data?
           </p>
-          <button onClick={handleDeleteBoard}>Board löschen</button>
+          <button onClick={handleDeleteBoard}>Delete Board</button>
         </div>
       )}
     </div>

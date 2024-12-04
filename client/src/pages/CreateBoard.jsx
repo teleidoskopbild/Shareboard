@@ -40,7 +40,7 @@ function CreateBoard() {
       const result = await response.json();
       console.log("Shareboard erstellt:", result);
 
-      const logMessage = `Board - ${boardData.boardName} erstellt von ${boardData.ownerName}`;
+      const logMessage = `Board - ${boardData.boardName} created by ${boardData.ownerName}`;
       const logResponse = await fetch(`${backendUrl}/api/logs`, {
         method: "POST",
         headers: {
@@ -72,21 +72,21 @@ function CreateBoard() {
   return (
     <div>
       <h2>Create a New Board</h2>
-      <p>Ausgewähltes Layout: {selectedLayout.name}</p>
+      <p>Chosen Layout: {selectedLayout.name}</p>
 
       {/* Zeigt die Spalten des ausgewählten Layouts an */}
-      <div>
-        <h3>Spalten:</h3>
+      {/* <div>
+        <h3>Board Columns:</h3>
         <ul>
           {selectedLayout.columns.length > 0 ? (
             selectedLayout.columns.map((column, index) => (
               <li key={index}>{column.name}</li>
             ))
           ) : (
-            <p>Freestyle – keine vordefinierten Spalten</p>
+            <p>Freestyle – no predefined columns</p>
           )}
         </ul>
-      </div>
+      </div> */}
 
       <form onSubmit={handleSubmit}>
         <div>
