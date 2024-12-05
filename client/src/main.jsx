@@ -11,6 +11,7 @@ import Board from "./pages/Board.jsx";
 import SelectBoard from "./pages/SelectBoard.jsx";
 import FreestyleBoard from "./pages/FreestyleBoard.jsx";
 import UpdateNote from "./pages/UpdateNote.jsx";
+import UserLog from "./pages/UserLog.jsx";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
       { path: "createboard", element: <CreateBoard /> },
       { path: "selectboard", element: <SelectBoard /> },
       { path: "freestyleboard", element: <FreestyleBoard /> },
+      { path: "userlog/:shareboardId/:ownerKey", element: <UserLog /> },
       { path: "settings/:shareboardId/:ownerKey", element: <Settings /> },
       { path: "settings/:shareboardId/:ownerKey/users", element: <Settings /> },
       {
