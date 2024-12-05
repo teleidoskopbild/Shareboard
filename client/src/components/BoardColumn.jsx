@@ -1,7 +1,14 @@
 import { useDroppable } from "@dnd-kit/core";
 import Note from "./Note";
 
-const BoardColumn = ({ title, notes, columnId, userKey, currentUserName }) => {
+const BoardColumn = ({
+  title,
+  notes,
+  columnId,
+  userKey,
+  currentUserName,
+  colorClass,
+}) => {
   const { setNodeRef, isOver } = useDroppable({
     id: columnId,
   });
@@ -10,12 +17,12 @@ const BoardColumn = ({ title, notes, columnId, userKey, currentUserName }) => {
   return (
     <div
       ref={setNodeRef}
-      className={`flex flex-col border-2 rounded-lg w-80 min-h-[350px] bg-gray-50 shadow-md transition-all ${
+      className={`flex flex-col rounded-lg w-80 min-h-[350px] bg-gray-50 shadow-md transition-all ${
         isOver ? "border-blue-600 scale-105 shadow-lg" : "border-gray-300"
       }`}
     >
       <div
-        className="bg-blue-500 text-white p-4 rounded-t-lg"
+        className={`bg-blue-500 text-white p-4 rounded-t-lg ${colorClass}`}
         style={{ fontWeight: "bold", fontSize: "1.25rem", textAlign: "center" }}
       >
         {title}

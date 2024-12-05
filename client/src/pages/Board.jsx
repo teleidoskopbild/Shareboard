@@ -22,6 +22,10 @@ export default function Board() {
     // Navigiere zurück zur Settings-Seite mit den entsprechenden Parametern
     navigate(`/settings/${boardData.board.id}/${userKey}`);
   };
+  const handleNavigateToUserLog = () => {
+    // Navigiere zurück zur Settings-Seite mit den entsprechenden Parametern
+    navigate(`/userlog/${boardData.board.id}/${userKey}`);
+  };
 
   const handleDragStart = (event) => {
     const { active } = event;
@@ -127,8 +131,6 @@ export default function Board() {
     const currentUser = boardData.users.find(
       (user) => user.shareboard_key === userKey
     );
-    console.log("cu: ", currentUser);
-    console.log("uk: ", userKey);
 
     const newNote = {
       title: newTitle,
@@ -218,99 +220,124 @@ export default function Board() {
     boardData.users.find((user) => user.shareboard_key === userKey)?.name ||
     "Unbekannt";
 
-  console.log("cun: ", currentUserName);
+  const columnColors = [
+    "bg-red-500",
+    "bg-blue-500",
+    "bg-yellow-500",
+    "bg-green-500",
+    "bg-purple-500",
+  ];
 
   return (
     <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
-      {/* Zurück zur Einstellung für den Besitzer */}
-      {boardData.isOwner && (
-        <div className="mb-4">
-          <button
-            onClick={handleNavigateToSettings}
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-          >
-            Back to Settings
-          </button>
+      <div className="flex flex-col min-h-screen px-4">
+        {" "}
+        <div className="flex justify-between items-center mb-8 px-4">
+          {/* Board Name */}
+          <h1 className="text-4xl font-bold text-gray-800 leading-tight">
+            {boardData.board.name}
+          </h1>
+
+          {/* Settings Button */}
+          {boardData.isOwner && (
+            <div>
+              <button
+                onClick={handleNavigateToSettings}
+                className="bg-blue-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
+              >
+                Back to Settings
+              </button>
+            </div>
+          )}
         </div>
-      )}
+        <div className="flex flex-wrap gap-8 justify-center flex-grow items-start">
+          {/* Task hinzufügen */}
+          <form
+            onSubmit={handleSubmit}
+            className="bg-white shadow-md rounded-lg p-6 mb-8 w-full max-w-md"
+          >
+            <h3 className="text-lg font-semibold mb-4">Add a Task</h3>
+            <input
+              type="text"
+              value={newTitle}
+              onChange={(e) => setNewTitle(e.target.value)}
+              placeholder="Title"
+              className="border border-gray-300 rounded-lg p-2 w-full mb-4"
+              required
+            />
+            <textarea
+              value={newDescription}
+              onChange={(e) => setNewDescription(e.target.value)}
+              placeholder="Description"
+              className="border border-gray-300 rounded-lg p-2 w-full mb-4"
+              required
+            />
+            <button
+              type="submit"
+              className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+            >
+              Add Task
+            </button>
+          </form>
+          {/* Benutzer-Log */}
+          <div className="mb-8 w-full max-w-md bg-white border border-gray-300 rounded-lg shadow-lg p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-800">User Log</h3>
+              <button
+                onClick={handleNavigateToUserLog}
+                className="ml-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+              >
+                View All
+              </button>
+            </div>
 
-      {/* Board-Titel und Benutzerliste */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-4">{boardData.board.name}</h1>
-        <h2 className="text-xl font-semibold mb-2">Board Users:</h2>
-        <ul className="list-disc ml-6">
-          {boardData.users.map((user) => (
-            <li key={user.id} className="text-gray-700">
-              {user.name}
-            </li>
-          ))}
-        </ul>
-      </div>
+            <ul className="space-y-2">
+              {userLog.slice(0, 3).map((log, index) => {
+                const timestamp = new Date(log.timestamp);
+                const formattedTime = timestamp.toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                });
+                const formattedDate = timestamp.toLocaleDateString([], {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                });
 
-      {/* Task hinzufügen */}
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded-lg p-6 mb-8 w-full max-w-md"
-      >
-        <h3 className="text-lg font-semibold mb-4">Add a Task</h3>
-        <input
-          type="text"
-          value={newTitle}
-          onChange={(e) => setNewTitle(e.target.value)}
-          placeholder="Title"
-          className="border border-gray-300 rounded-lg p-2 w-full mb-4"
-          required
-        />
-        <textarea
-          value={newDescription}
-          onChange={(e) => setNewDescription(e.target.value)}
-          placeholder="Description"
-          className="border border-gray-300 rounded-lg p-2 w-full mb-4"
-          required
-        />
-        <button
-          type="submit"
-          className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
-        >
-          Add Task
-        </button>
-      </form>
-
-      {/* Spaltenbereich */}
-      <div className="flex flex-wrap gap-4">
-        {boardData.columns.map((column) => (
-          <BoardColumn
-            key={column.id}
-            title={column.name}
-            notes={notes.filter((note) => note.board_column_fk === column.id)}
-            columnId={column.id}
-            userKey={userKey}
-            currentUserName={currentUserName}
-          />
-        ))}
-      </div>
-
-      {/* Benutzer-Log */}
-      <div className="mt-8">
-        <h3 className="text-lg font-semibold mb-4">User Log</h3>
-        <ul className="space-y-2">
-          {userLog.map((log, index) => {
-            const timestamp = new Date(log.timestamp);
-            const formattedTime = timestamp.toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            });
-
+                return (
+                  <li
+                    key={index}
+                    className="text-gray-600 bg-gray-50 rounded-md p-3 shadow-sm"
+                  >
+                    <p>{log.message} </p>
+                    <p className="mt-2 text-gray-500 text-sm">
+                      {formattedTime} on {formattedDate}
+                    </p>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+        {/* Spaltenbereich */}
+        <div className="flex flex-wrap gap-4 justify-center">
+          {boardData.columns.map((column, index) => {
+            const colorClass = columnColors[index % columnColors.length];
             return (
-              <li key={index} className="text-gray-600">
-                <p>
-                  {log.message} at{" "}
-                  <span className="font-medium">{formattedTime}</span>
-                </p>
-              </li>
+              <BoardColumn
+                key={column.id}
+                title={column.name}
+                notes={notes.filter(
+                  (note) => note.board_column_fk === column.id
+                )}
+                columnId={column.id}
+                userKey={userKey}
+                currentUserName={currentUserName}
+                colorClass={colorClass}
+              />
             );
           })}
-        </ul>
+        </div>
       </div>
 
       {/* Drag Overlay */}

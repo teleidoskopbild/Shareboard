@@ -28,9 +28,14 @@ const Note = ({ note, userKey, currentUserName }) => {
           isDragging ? "opacity-50" : "opacity-100"
         } transition-opacity`}
       >
-        <h4 className="text-xl font-semibold">{note.title}</h4>
+        {" "}
+        {note.assignee && note.assignee !== "nobody assigned" && (
+          <p className="text-gray-600 text-xs">Assigned to {note.assignee}</p>
+        )}
+        <div className="flex items-center justify-between mb-8">
+          <h4 className="text-xl font-semibold">{note.title}</h4>
+        </div>
         <p className="text-gray-700">{note.description}</p>
-        <p className="text-gray-600">Assigned to {note.assignee}</p>
       </div>
       <button
         onClick={handleUpdateClick}

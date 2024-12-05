@@ -16,7 +16,8 @@ const UpdateNote = () => {
     columnId: "",
     assignee: "",
   });
-
+  console.log(id);
+  console.log(userKey);
   const [columns, setColumns] = useState([]);
   const [selectedColumn, setSelectedColumn] = useState("");
   const [users, setUsers] = useState([]);
