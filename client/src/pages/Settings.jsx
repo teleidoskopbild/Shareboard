@@ -15,8 +15,7 @@ export default function Settings() {
 
   // const { state } = useLocation();
   const navigate = useNavigate();
-  // console.log("state: ", state);
-  // console.log(shareboardId, ownerKey);
+
   useEffect(() => {
     console.log("useEffect", shareboardId, ownerKey);
     const fetchBoardSettings = async () => {
@@ -236,7 +235,7 @@ export default function Settings() {
   console.log("Empfangene Daten in Settings:", boardData);
 
   return (
-    <div className="p-4 md:p-8">
+    <div className="p-4 md:p-8 max-w-screen-lg mx-auto">
       <h1 className="text-3xl font-bold mb-4">
         Boardname: {boardData.boardName}
       </h1>

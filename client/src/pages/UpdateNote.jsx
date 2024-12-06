@@ -260,31 +260,28 @@ const UpdateNote = () => {
           <p className="mt-2">Assigned to: {note.assignee}</p>
         </div>
 
-        <div className="space-x-4">
+        <div className="flex flex-col space-y-4 mt-6">
           <button
             type="submit"
-            className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200"
+            className="w-full bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200"
           >
             Update Task
           </button>
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-200"
+            className="w-full bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-200"
           >
             Go Back without Changes
           </button>
+          <button
+            onClick={handleDelete}
+            className="w-full bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600 transition duration-200"
+          >
+            Delete Task
+          </button>
         </div>
       </form>
-
-      <div className="mt-6">
-        <button
-          onClick={handleDelete}
-          className="bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600 transition duration-200"
-        >
-          Delete Task
-        </button>
-      </div>
     </div>
   );
 };

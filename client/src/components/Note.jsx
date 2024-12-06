@@ -30,19 +30,24 @@ const Note = ({ note, userKey, currentUserName }) => {
       >
         {" "}
         {note.assignee && note.assignee !== "nobody assigned" && (
-          <p className="text-gray-600 text-xs">Assigned to {note.assignee}</p>
+          <p className="text-gray-600 text-xs mb-2">
+            Assigned to {note.assignee}
+          </p>
         )}
         <div className="flex items-center justify-between mb-8">
           <h4 className="text-xl font-semibold">{note.title}</h4>
         </div>
         <p className="text-gray-700">{note.description}</p>
       </div>
-      <button
-        onClick={handleUpdateClick}
-        className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200"
-      >
-        Update
-      </button>
+      <div className="mt-2">
+        {" "}
+        <button
+          onClick={handleUpdateClick}
+          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200"
+        >
+          Update
+        </button>
+      </div>
     </div>
   );
 };
