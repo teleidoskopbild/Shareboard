@@ -17,7 +17,7 @@ const BoardColumn = ({
   return (
     <div
       ref={setNodeRef}
-      className={`flex flex-col rounded-lg w-80 min-h-[350px] bg-gray-50 shadow-md transition-all ${
+      className={`flex flex-col rounded-lg w-80 min-h-[350px] bg-gray-50 shadow-md transition-all mb-8 ${
         isOver ? "border-blue-600 scale-105 shadow-lg" : "border-gray-300"
       }`}
     >
@@ -28,7 +28,10 @@ const BoardColumn = ({
         {title}
       </div>
 
-      <div className="flex flex-col gap-4 p-4">
+      <div
+        className="flex flex-col gap-4 p-4 overflow-y-auto w-80"
+        style={{ height: "500px" }}
+      >
         {notes.length > 0 ? (
           notes.map((note) => (
             <Note

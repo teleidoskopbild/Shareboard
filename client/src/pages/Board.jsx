@@ -98,7 +98,7 @@ export default function Board() {
             (user) => user.shareboard_key === userKey
           );
 
-          const logMessage = `Note - ${draggedNote.title} moved from ${fromColumn.name} to ${toColumn.name} by ${currentUser.name}`;
+          const logMessage = `Task - ${draggedNote.title} moved from ${fromColumn.name} to ${toColumn.name} by ${currentUser.name}`;
           const logResponse = await fetch(`${backendUrl}/api/logs`, {
             method: "POST",
             headers: {
@@ -220,12 +220,21 @@ export default function Board() {
     boardData.users.find((user) => user.shareboard_key === userKey)?.name ||
     "Unbekannt";
 
+  // const columnColors = [
+  //   "bg-red-500",
+  //   "bg-blue-500",
+  //   "bg-yellow-500",
+  //   "bg-green-500",
+  //   "bg-purple-500",
+  // ];
+
   const columnColors = [
-    "bg-red-500",
+    "bg-blue-800",
+    "bg-blue-700",
+    "bg-blue-600",
     "bg-blue-500",
-    "bg-yellow-500",
-    "bg-green-500",
-    "bg-purple-500",
+    "bg-blue-400",
+    "bg-blue-300",
   ];
 
   return (
@@ -274,7 +283,7 @@ export default function Board() {
             />
             <button
               type="submit"
-              className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
             >
               Add Task
             </button>
@@ -320,7 +329,7 @@ export default function Board() {
           </div>
         </div>
         {/* Spaltenbereich */}
-        <div className="flex flex-wrap gap-4 justify-center">
+        <div className="flex flex-nowrap gap-4 justify-start md:justify-center overflow-y-auto">
           {boardData.columns.map((column, index) => {
             const colorClass = columnColors[index % columnColors.length];
             return (

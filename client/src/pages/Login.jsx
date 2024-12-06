@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [key, setKey] = useState("");
-
+  const navigate = useNavigate();
   return (
-    <div className="flex flex-col items-center p-4 md:p-8">
+    <div className="flex flex-col items-center min-h-screen justify-center p-4 md:p-8">
       <h1 className="text-3xl md:text-5xl font-bold mb-4">Login Page</h1>
       <form className="w-full max-w-lg">
-        <div className="mb-4">
+        <div className="mb-4 text-center">
           <label htmlFor="key" className="block text-lg font-medium mb-2">
             Enter your shareboard key:
           </label>
@@ -22,17 +22,23 @@ export default function Login() {
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-
         {key.trim() && (
           <Link to={`/board/${key}`} className="w-full">
             <button
               type="button"
-              className="w-full bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200"
+              className="w-full bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200"
             >
               Go to Board
             </button>
           </Link>
         )}
+        <button
+          type="button"
+          onClick={() => navigate(-1)}
+          className="w-full bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-200 mt-8"
+        >
+          Back to Home
+        </button>
       </form>
     </div>
   );
