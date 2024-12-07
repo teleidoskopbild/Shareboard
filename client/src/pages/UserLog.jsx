@@ -79,7 +79,7 @@ export default function UserLog() {
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-200"
+            className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200"
           >
             Go Back to Board
           </button>

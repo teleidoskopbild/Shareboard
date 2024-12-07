@@ -13,6 +13,9 @@ export default function Settings() {
   const [editUserName, setEditUserName] = useState("");
   const [editUserEmail, setEditUserEmail] = useState("");
 
+  const [isDeleteMode, setIsDeleteMode] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+
   // const { state } = useLocation();
   const navigate = useNavigate();
 
@@ -360,16 +363,48 @@ export default function Settings() {
       {boardData.ownerKey === ownerKey && (
         <div className="mt-8 bg-red-100 p-6 rounded-lg shadow-md">
           <h2 className="text-2xl font-semibold mb-4">Delete Board</h2>
-          <p className="mb-4">
-            Are you sure you want to delete the entire board, including all
-            users and data?
-          </p>
-          <button
-            onClick={handleDeleteBoard}
-            className="bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600 transition duration-200"
-          >
-            Delete Board
-          </button>
+          {isDeleteMode ? (
+            <>
+              <p className="mb-4">
+                Are you sure you want to delete the entire board, including all
+                users and data?
+              </p>
+              <p className="mb-4">Type DELETE to confirm:</p>
+              <input
+                type="text"
+                placeholder="Type DELETE here"
+                className=" flex w-1/3 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+                onChange={(e) => setInputValue(e.target.value)} // Track input directly
+              />
+              <button
+                onClick={() => {
+                  if (inputValue.trim() === "DELETE") {
+                    handleDeleteBoard();
+                  } else {
+                    alert(
+                      "Please type DELETE to confirm and then press the DELETE button."
+                    );
+                  }
+                }}
+                className="bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600 transition duration-200"
+              >
+                Delete
+              </button>
+              <button
+                onClick={() => setIsDeleteMode(false)}
+                className="ml-4 bg-gray-300 text-black py-2 px-6 rounded-md hover:bg-gray-400 transition duration-200"
+              >
+                Cancel
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => setIsDeleteMode(true)}
+              className="bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600 transition duration-200"
+            >
+              Delete Board
+            </button>
+          )}
         </div>
       )}
     </div>
