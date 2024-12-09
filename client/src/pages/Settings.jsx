@@ -30,7 +30,6 @@ export default function Settings() {
         if (!response.ok) {
           throw new Error("Fehler beim Abrufen der Board-Daten.");
         }
-
         const data = await response.json();
         setBoardData(data);
       } catch (error) {
@@ -231,6 +230,32 @@ export default function Settings() {
     }
   };
 
+  const handleSendEmail = async (user) => {
+    try {
+      const response = await fetch(`${backendUrl}/api/mail`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userName: user.name,
+          shareboardKey: user.shareboardKey,
+          boardName: boardData.boardName,
+          userMail: user.email,
+        }),
+      });
+
+      if (response.ok) {
+        console.log("E-Mail erfolgreich versendet.");
+        // Hier kann man eventuell ein Feedback anzeigen, dass die E-Mail gesendet wurde
+      } else {
+        console.error("Fehler beim Versenden der E-Mail:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Fehler beim Versenden der E-Mail:", error.message);
+    }
+  };
+
   if (!boardData) {
     return <div>Loading...</div>;
   }
@@ -335,10 +360,20 @@ export default function Settings() {
                 <div className="flex space-x-4 mt-4">
                   <button
                     onClick={() => handleEditUser(user)}
-                    className="bg-yellow-500 text-white py-2 px-6 rounded-md hover:bg-yellow-600 transition duration-200"
+                    className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-yellow-600 transition duration-200"
                   >
                     Edit
                   </button>
+
+                  {user.email && (
+                    <button
+                      onClick={() => handleSendEmail(user)}
+                      className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200"
+                    >
+                      Send Mail
+                    </button>
+                  )}
+
                   <button
                     onClick={() => handleDeleteUser(user.id)}
                     className="bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600 transition duration-200"
