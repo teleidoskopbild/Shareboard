@@ -30,7 +30,7 @@ const BoardColumn = ({
 
       <div
         className="flex flex-col gap-4 p-4 overflow-y-auto w-80"
-        style={{ height: "500px" }}
+        style={{ height: "750px" }}
       >
         {notes.length > 0 ? (
           notes.map((note) => (

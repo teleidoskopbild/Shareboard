@@ -240,16 +240,18 @@ export default function Board() {
   return (
     <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
       <div className="flex flex-col min-h-screen px-4">
-        {" "}
-        <div className="flex justify-between items-center mb-8 px-4">
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row justify-between items-center mb-8 px-4 gap-4 bg-blue-100 p-4 mt-2 rounded-lg">
           {/* Board Name */}
-          <h1 className="text-4xl font-bold text-gray-800 leading-tight">
-            {boardData.board.name}
-          </h1>
+          <div className="">
+            <h1 className="text-4xl font-bold text-gray-800 leading-tight">
+              Boardname: {boardData.board.name}
+            </h1>
+          </div>
 
           {/* Settings Button */}
           {boardData.isOwner && (
-            <div>
+            <div className="mt-4 lg:mt-0">
               <button
                 onClick={handleNavigateToSettings}
                 className="bg-blue-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
@@ -259,93 +261,100 @@ export default function Board() {
             </div>
           )}
         </div>
-        <div className="flex flex-wrap gap-8 justify-center flex-grow items-start">
+
+        {/* Main Content */}
+        <div className="flex flex-col lg:flex-row gap-2 flex-grow">
           {/* Task hinzufügen */}
-          <form
-            onSubmit={handleSubmit}
-            className="bg-white shadow-md rounded-lg p-6 mb-8 w-full max-w-md"
-          >
-            <h3 className="text-lg font-semibold mb-4">Add a Task</h3>
-            <input
-              type="text"
-              value={newTitle}
-              onChange={(e) => setNewTitle(e.target.value)}
-              placeholder="Title"
-              className="border border-gray-300 rounded-lg p-2 w-full mb-4"
-              required
-            />
-            <textarea
-              value={newDescription}
-              onChange={(e) => setNewDescription(e.target.value)}
-              placeholder="Description"
-              className="border border-gray-300 rounded-lg p-2 w-full mb-4"
-              required
-            />
-            <button
-              type="submit"
-              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+          <div className="flex flex-col gap-0 w-full lg:w-1/4 mt-0">
+            <form
+              onSubmit={handleSubmit}
+              className="bg-white shadow-md  border border-gray-300 rounded-lg p-6 mb-8 w-full max-w-md"
             >
-              Add Task
-            </button>
-          </form>
-          {/* Benutzer-Log */}
-          <div className="mb-8 w-full max-w-md bg-white border border-gray-300 rounded-lg shadow-lg p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-800">User Log</h3>
-              <button
-                onClick={handleNavigateToUserLog}
-                className="ml-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-              >
-                View All
-              </button>
-            </div>
-
-            <ul className="space-y-2">
-              {userLog.slice(0, 3).map((log, index) => {
-                const timestamp = new Date(log.timestamp);
-                const formattedTime = timestamp.toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                });
-                const formattedDate = timestamp.toLocaleDateString([], {
-                  day: "2-digit",
-                  month: "2-digit",
-                  year: "numeric",
-                });
-
-                return (
-                  <li
-                    key={index}
-                    className="text-gray-600 bg-gray-50 rounded-md p-3 shadow-sm"
-                  >
-                    <p>{log.message} </p>
-                    <p className="mt-2 text-gray-500 text-sm">
-                      {formattedTime} on {formattedDate}
-                    </p>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </div>
-        {/* Spaltenbereich */}
-        <div className="flex flex-nowrap gap-4 justify-start md:justify-center overflow-y-auto">
-          {boardData.columns.map((column, index) => {
-            const colorClass = columnColors[index % columnColors.length];
-            return (
-              <BoardColumn
-                key={column.id}
-                title={column.name}
-                notes={notes.filter(
-                  (note) => note.board_column_fk === column.id
-                )}
-                columnId={column.id}
-                userKey={userKey}
-                currentUserName={currentUserName}
-                colorClass={colorClass}
+              <h3 className="text-lg font-semibold mb-4">Add a Task</h3>
+              <input
+                type="text"
+                value={newTitle}
+                onChange={(e) => setNewTitle(e.target.value)}
+                placeholder="Title"
+                className="border border-gray-300 rounded-lg p-2 w-full mb-4"
+                required
               />
-            );
-          })}
+              <textarea
+                value={newDescription}
+                onChange={(e) => setNewDescription(e.target.value)}
+                placeholder="Description"
+                className="border border-gray-300 rounded-lg p-2 w-full mb-4"
+                required
+              />
+              <button
+                type="submit"
+                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+              >
+                Add Task
+              </button>
+            </form>
+            {/* Benutzer-Log */}
+            <div className="mb-8 mt-2 w-full max-w-md bg-white border border-gray-300 rounded-lg shadow-lg p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-800">
+                  User Log
+                </h3>
+                <button
+                  onClick={handleNavigateToUserLog}
+                  className="ml-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                >
+                  View All
+                </button>
+              </div>
+
+              <ul className="space-y-2">
+                {userLog.slice(0, 3).map((log, index) => {
+                  const timestamp = new Date(log.timestamp);
+                  const formattedTime = timestamp.toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  });
+                  const formattedDate = timestamp.toLocaleDateString([], {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  });
+
+                  return (
+                    <li
+                      key={index}
+                      className="text-gray-600 bg-gray-50 rounded-md p-3 shadow-sm"
+                    >
+                      <p>{log.message} </p>
+                      <p className="mt-2 text-gray-500 text-sm">
+                        {formattedTime} on {formattedDate}
+                      </p>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
+
+          {/* Spaltenbereich */}
+          <div className="flex flex-nowrap gap-4 w-full lg:w-3/4 overflow-x-auto">
+            {boardData.columns.map((column, index) => {
+              const colorClass = columnColors[index % columnColors.length];
+              return (
+                <BoardColumn
+                  key={column.id}
+                  title={column.name}
+                  notes={notes.filter(
+                    (note) => note.board_column_fk === column.id
+                  )}
+                  columnId={column.id}
+                  userKey={userKey}
+                  currentUserName={currentUserName}
+                  colorClass={colorClass}
+                />
+              );
+            })}
+          </div>
         </div>
       </div>
 
