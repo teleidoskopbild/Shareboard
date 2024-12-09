@@ -15,6 +15,7 @@ import deleteShareboardRoute from "./routes/deleteShareboardRoute.js";
 import getShareboardRoute from "./routes/getShareboardRoute.js";
 import editNoteColumnRoute from "./routes/editNoteColumnRoute.js";
 import getUsersForBoardRoute from "./routes/getUsersForBoardRoute.js";
+import mailRoute from "./routes/mailRoute.js";
 
 const router = express.Router();
 
@@ -41,6 +42,7 @@ app.use("/api", deleteShareboardRoute);
 app.use("/api", getShareboardRoute);
 app.use("/api", editNoteColumnRoute);
 app.use("/api", getUsersForBoardRoute);
+app.use("/api", mailRoute);
 
 // Test-Route
 app.get("/", (req, res) => {
