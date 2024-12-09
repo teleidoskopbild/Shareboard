@@ -84,6 +84,7 @@ function CreateBoard() {
             value={boardName}
             onChange={(e) => setBoardName(e.target.value)}
             required
+            placeholder="name of the board"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -95,18 +96,19 @@ function CreateBoard() {
             value={ownerName}
             onChange={(e) => setOwnerName(e.target.value)}
             required
+            placeholder="your Name"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
         <div className="mb-4">
-          <label className="block text-lg font-medium mb-2">
-            Owner Email (optional):
-          </label>
+          <label className="block text-lg font-medium mb-2">Owner Email:</label>
           <input
             type="email"
             value={ownerEmail}
             onChange={(e) => setOwnerEmail(e.target.value)}
+            required
+            placeholder="your email-adress"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>

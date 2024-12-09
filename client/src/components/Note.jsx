@@ -24,7 +24,7 @@ const Note = ({ note, userKey, currentUserName }) => {
         ref={setNodeRef}
         {...listeners}
         {...attributes}
-        className={`border border-gray-300 p-4 mb-2 bg-gray-50 ${
+        className={`border border-gray-300 p-4 mb-2 bg-gray-50 h-40 overflow-hidden ${
           isDragging ? "opacity-50" : "opacity-100"
         } transition-opacity`}
       >

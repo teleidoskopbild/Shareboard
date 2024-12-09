@@ -264,13 +264,24 @@ export default function Settings() {
 
   return (
     <div className="p-4 md:p-8 max-w-screen-lg mx-auto">
-      <h1 className="text-3xl font-bold mb-4">
-        Boardname: {boardData.boardName}
-      </h1>
-      <p className="text-lg mb-4">Boardowner: {boardData.ownerName}</p>
-      <p className="text-lg mb-6">
-        Your personal Owner Key: {boardData.ownerKey}
-      </p>
+      <div>
+        <h1 className="text-3xl font-bold mb-4">
+          Boardname: {boardData.boardName}
+        </h1>
+        <p className="text-lg mb-4">Boardowner: {boardData.ownerName}</p>
+        <p className="text-lg mb-6">
+          Your personal Owner Key: {boardData.ownerKey}
+        </p>
+
+        <div className="mt-8 mb-8">
+          <button
+            onClick={handleNavigateToBoard}
+            className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200"
+          >
+            Go to Board
+          </button>
+        </div>
+      </div>
 
       <h2 className="text-2xl font-semibold mb-4">Add a User</h2>
       <form onSubmit={handleAddUser} className="mb-6">
@@ -357,22 +368,24 @@ export default function Settings() {
                   </button>
                 </form>
               ) : (
-                <div className="flex space-x-4 mt-4">
-                  <button
-                    onClick={() => handleEditUser(user)}
-                    className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-yellow-600 transition duration-200"
-                  >
-                    Edit
-                  </button>
-
-                  {user.email && (
+                <div className="flex space-x-4 mt-4 justify-between">
+                  <div>
+                    {" "}
                     <button
-                      onClick={() => handleSendEmail(user)}
-                      className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200"
+                      onClick={() => handleEditUser(user)}
+                      className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 mr-6"
                     >
-                      Send Mail
+                      Edit
                     </button>
-                  )}
+                    {user.email && (
+                      <button
+                        onClick={() => handleSendEmail(user)}
+                        className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 transition duration-200"
+                      >
+                        Send Mail
+                      </button>
+                    )}
+                  </div>
 
                   <button
                     onClick={() => handleDeleteUser(user.id)}
@@ -385,15 +398,6 @@ export default function Settings() {
             </li>
           ))}
       </ul>
-
-      <div className="mt-8">
-        <button
-          onClick={handleNavigateToBoard}
-          className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200"
-        >
-          Go to Board
-        </button>
-      </div>
 
       {boardData.ownerKey === ownerKey && (
         <div className="mt-8 bg-red-100 p-6 rounded-lg shadow-md">

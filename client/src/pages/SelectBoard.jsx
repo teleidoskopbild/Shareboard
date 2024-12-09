@@ -43,7 +43,7 @@ function SelectBoard() {
 
   return (
     <div className="flex flex-col items-center justify-center  min-h-screen p-4 md:p-8">
-      <h2 className="text-3xl md:text-4xl font-bold mb-6">
+      <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">
         Select a Board Layout
       </h2>
 
@@ -62,6 +62,27 @@ function SelectBoard() {
             </p>
           </div>
         ))}
+        {selectedLayout && (
+          <div className="mt-6 w-full max-w-lg">
+            {selectedLayout.name === "Freestyle" ? (
+              <Link to="/freestyleboard" className="w-full">
+                <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 w-full">
+                  Continue
+                </button>
+              </Link>
+            ) : (
+              <Link
+                to="/createboard"
+                state={{ layout: selectedLayout }}
+                className="w-full"
+              >
+                <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 w-full">
+                  Continue
+                </button>
+              </Link>
+            )}
+          </div>
+        )}
         <button
           type="button"
           onClick={() => navigate(-1)}
@@ -70,28 +91,6 @@ function SelectBoard() {
           Back to Home
         </button>
       </div>
-
-      {selectedLayout && (
-        <div className="mt-6 w-full max-w-lg">
-          {selectedLayout.name === "Freestyle" ? (
-            <Link to="/freestyleboard" className="w-full">
-              <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 w-full">
-                Continue
-              </button>
-            </Link>
-          ) : (
-            <Link
-              to="/createboard"
-              state={{ layout: selectedLayout }}
-              className="w-full"
-            >
-              <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 w-full">
-                Continue
-              </button>
-            </Link>
-          )}
-        </div>
-      )}
     </div>
   );
 }
