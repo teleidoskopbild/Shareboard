@@ -1,4 +1,5 @@
 import db from "../util/db-connect.js";
+import pusher from "../util/pusher.js";
 
 // Alle Notizen abrufen
 export const getAllNotes = async (req, res) => {
@@ -36,6 +37,10 @@ export const createNote = async (req, res) => {
       })
       .returning("*");
 
+    pusher.trigger("notes", "reload", {
+      message: "Eine neue Notiz wurde erstellt!",
+    });
+
     res.status(201).json(newNote);
   } catch (error) {
     console.error(error);
@@ -69,6 +74,10 @@ export const updateNote = async (req, res) => {
       })
       .returning("*");
 
+    pusher.trigger("notes", "reload", {
+      message: "Eine Notiz wurde geändert!",
+    });
+
     res.json(updatedNote);
   } catch (error) {
     console.error(error);
@@ -83,6 +92,9 @@ export const deleteNote = async (req, res) => {
   try {
     await db("shareboard_notes").where("id", id).del();
     res.status(200).json({ message: "Notiz erfolgreich gelöscht" });
+    pusher.trigger("notes", "reload", {
+      message: "Eine Notiz wurde gelöscht!",
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Fehler beim Löschen der Notiz" });

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { DndContext, DragOverlay } from "@dnd-kit/core";
 import BoardColumn from "../components/BoardColumn.jsx";
 import Note from "../components/Note.jsx";
+import pusher from "../pusher.js";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -16,6 +17,8 @@ export default function Board() {
   const [newTitle, setNewTitle] = useState("");
   const [newDescription, setNewDescription] = useState("");
   const [userLog, setUserLog] = useState([]);
+
+  const [reload, setReload] = useState(true);
 
   const navigate = useNavigate();
   const handleNavigateToSettings = () => {
@@ -188,7 +191,6 @@ export default function Board() {
       console.error("Error while creatingthe note:", error.message);
     }
   };
-
   useEffect(() => {
     const fetchBoardData = async () => {
       try {
@@ -200,13 +202,31 @@ export default function Board() {
         setBoardData(data); // Speichere die Daten im State
         setNotes(data.notes);
         setUserLog(data.logs);
+        setReload(false);
       } catch (err) {
         console.error("Fetch-Error:", err.message);
       }
     };
+    if (reload) {
+      fetchBoardData();
+    }
+  }, [userKey, reload]);
 
-    fetchBoardData();
-  }, [userKey]);
+  useEffect(() => {
+    const channel = pusher.subscribe("notes");
+
+    async function pusherHandler() {
+      setReload(true);
+    }
+    channel.bind("reload", pusherHandler);
+
+    // Setze Pusher Event Listener
+
+    // Cleanup, wenn der Kanal nicht mehr benötigt wird
+    return () => {
+      channel.unbind("reload", pusherHandler);
+    };
+  }, []);
 
   if (error) {
     return <h1>Error: {error}</h1>;
