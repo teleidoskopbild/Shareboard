@@ -1,4 +1,5 @@
 import db from "../util/db-connect.js"; // Dein Knex-Setup
+import pusher from "../util/pusher.js";
 
 export const editNoteColumn = async (req, res) => {
   const { noteId } = req.params; // Die ID der Notiz aus den URL-Parametern
@@ -23,6 +24,9 @@ export const editNoteColumn = async (req, res) => {
       .where({ id: noteId })
       .update({ board_column_fk: newColumnId })
       .returning("*"); // Gibt das aktualisierte Objekt zurück
+    pusher.trigger("notes", "reload", {
+      message: "Eine Notiz wurde gelöscht!",
+    });
 
     // Falls kein Update durchgeführt wurde (z.B. keine Änderung)
     if (!updatedNote.length) {
