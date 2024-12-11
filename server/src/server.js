@@ -16,6 +16,7 @@ import getShareboardRoute from "./routes/getShareboardRoute.js";
 import editNoteColumnRoute from "./routes/editNoteColumnRoute.js";
 import getUsersForBoardRoute from "./routes/getUsersForBoardRoute.js";
 import mailRoute from "./routes/mailRoute.js";
+import googleGeminiRoute from "./routes/googleGeminiRoute.js";
 
 const router = express.Router();
 
@@ -43,6 +44,7 @@ app.use("/api", getShareboardRoute);
 app.use("/api", editNoteColumnRoute);
 app.use("/api", getUsersForBoardRoute);
 app.use("/api", mailRoute);
+app.use("/api", googleGeminiRoute);
 
 // Test-Route
 app.get("/", (req, res) => {

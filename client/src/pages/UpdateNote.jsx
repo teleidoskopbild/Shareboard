@@ -16,12 +16,14 @@ const UpdateNote = () => {
     columnId: "",
     assignee: "",
   });
+
   console.log(id);
   console.log(userKey);
   const [columns, setColumns] = useState([]);
   const [selectedColumn, setSelectedColumn] = useState("");
   const [users, setUsers] = useState([]);
   const [originalNote, setOriginalNote] = useState(null);
+  // const [answer, setAnswer] = useState(null);
 
   console.log("shareboard_fk:", shareboard_fk);
   console.log("userName ", userName);
@@ -62,8 +64,34 @@ const UpdateNote = () => {
     }));
   };
 
-  console.log("n: ", note);
-  console.log("on: ", originalNote);
+  const generateDescriptionFromTitle = async (title) => {
+    try {
+      const response = await fetch(`${backendUrl}/api/generate-description`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error generating description");
+      }
+
+      const data = await response.json();
+      console.log("Generated description:", data.description);
+
+      // Nur in das Description-Feld setzen, ohne zu speichern
+      setNote((prevNote) => ({
+        ...prevNote,
+        description: data.description, // Die generierte Beschreibung wird nur im Feld angezeigt
+      }));
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  // console.log("answer: ", answer);
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -78,10 +106,6 @@ const UpdateNote = () => {
     // if (note.columnId !== originalNote.columnId) {
     //   logMessage += `Task  ${note.title} was moved from ${originalNote.board_column_fk} to ${note.columnId} by ${userName}`;
     // }
-
-    console.log("Columns:", columns);
-    console.log("Original Column ID:", originalNote.board_column_fk);
-    console.log("New Column ID:", note.columnId);
 
     // Funktion, um den Spaltennamen basierend auf der columnId zu finden
     const getColumnNameById = (id) => {
@@ -220,6 +244,14 @@ const UpdateNote = () => {
         </div>
 
         <div>
+          <button
+            onClick={() => generateDescriptionFromTitle(note.title)}
+            type="button"
+            className="w-full bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200"
+          >
+            Generate Description
+          </button>
+
           <label htmlFor="column" className="block text-lg font-medium mb-2">
             Column
           </label>
