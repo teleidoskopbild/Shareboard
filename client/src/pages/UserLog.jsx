@@ -40,8 +40,8 @@ export default function UserLog() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg flex flex-col">
+    <div className="min-h-screen flex flex-col items-center justify-start bg-gray-100 dark:bg-gray-900 dark:text-gray-200">
+      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg flex flex-col mt-16 dark:bg-gray-600">
         <h1 className="text-2xl font-semibold mb-4">User Log</h1>
         {/* Logs mit max-height und Scrollen */}
         <ul
@@ -63,10 +63,10 @@ export default function UserLog() {
             return (
               <li
                 key={index}
-                className="text-gray-600 bg-gray-50 rounded-md p-3 shadow-sm"
+                className="text-gray-600 bg-gray-50 rounded-md p-3 shadow-sm dark:bg-gray-900 dark:text-gray-200"
               >
                 <p>{log.message}</p>
-                <p className="mt-2 text-gray-500 text-sm">
+                <p className="mt-2 text-gray-500 text-sm ">
                   {formattedTime} on {formattedDate}
                 </p>
               </li>
@@ -79,7 +79,7 @@ export default function UserLog() {
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200"
+            className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-purple-900 dark:hover:bg-purple-800"
           >
             Go Back to Board
           </button>

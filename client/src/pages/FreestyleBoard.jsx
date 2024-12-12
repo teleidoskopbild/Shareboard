@@ -20,8 +20,8 @@ function FreestyleBoard() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 md:p-8">
-      <div className="w-full max-w-3xl bg-white p-6 rounded-lg shadow-lg">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 md:p-8 dark:bg-gray-900 dark:text-gray-200">
+      <div className="w-full max-w-3xl bg-white p-6 rounded-lg shadow-lg  dark:bg-gray-900 dark:text-gray-200">
         <h2 className="text-3xl font-bold mb-6 text-center">
           Create your own Layout
         </h2>
@@ -41,7 +41,7 @@ function FreestyleBoard() {
           />
           <button
             onClick={addColumn}
-            className="mt-2 bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 w-full"
+            className="mt-2 bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 w-full dark:bg-purple-900 dark:hover:bg-purple-800"
           >
             Add Column
           </button>
@@ -72,7 +72,7 @@ function FreestyleBoard() {
             state={{ layout: { name: "FreestyleBoard", columns } }}
             className="inline-block mt-6 w-full"
           >
-            <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 w-full">
+            <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 w-full dark:bg-violet-900 dark:hover:bg-violet-800">
               Continue
             </button>
           </Link>

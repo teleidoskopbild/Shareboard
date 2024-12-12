@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center p-4 md:p-8 min-h-screen">
+    <div className="flex flex-col items-center justify-center p-4 md:p-8 min-h-screen dark:bg-gray-900 dark:text-gray-200">
       <h1 className="text-3xl md:text-5xl font-bold mb-4 text-center">
         Welcome to Shareboard!
       </h1>
@@ -14,20 +14,20 @@ export default function Home() {
       <div className="flex flex-col items-center w-full max-w-lg mt-16">
         <Link to="/selectboard" className="w-full group">
           <div className="relative">
-            <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 w-full">
+            <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 w-full dark:bg-blue-900 dark:hover:bg-blue-800">
               Create a Board
             </button>
-            <p className="mt-2 text-sm text-gray-600 text-center opacity-0 group-hover:opacity-100 transition duration-200">
+            <p className="mt-2 text-sm text-gray-600 text-center opacity-0 group-hover:opacity-100 transition duration-200 dark:text-gray-300">
               Create a new Shareboard
             </p>
           </div>
         </Link>{" "}
         <Link to="/login" className="w-full group mt-4">
           <div className="relative">
-            <button className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 w-full">
+            <button className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 w-full dark:bg-sky-900 dark:hover:bg-sky-800">
               Login
             </button>
-            <p className="mt-2 text-sm text-gray-600 text-center opacity-0 group-hover:opacity-100 transition duration-200">
+            <p className="mt-2 text-sm text-gray-600 text-center opacity-0 group-hover:opacity-100 transition duration-200 dark:text-gray-300">
               Participate on a Shareboard
             </p>
           </div>

@@ -15,37 +15,39 @@ const Note = ({ note, userKey, currentUserName }) => {
     });
   };
 
-  console.log("note cun: ", currentUserName);
-
   return (
-    <div className="border-0">
+    <div className="border-0 flex flex-col">
       <div
         onClick={(e) => console.debug(e)}
         ref={setNodeRef}
         {...listeners}
         {...attributes}
-        className={`border border-gray-300 p-4 mb-2 bg-gray-50 h-40 overflow-hidden ${
+        className={`border border-gray-300 p-4 mb-2 bg-gray-200 h-20 overflow-hidden ${
           isDragging ? "opacity-50" : "opacity-100"
-        } transition-opacity`}
+        } transition-opacity dark:bg-gray-400 dark:text-gray-200`}
       >
         {" "}
-        {note.assignee && note.assignee !== "nobody assigned" && (
+        {note.assignee && (
           <p className="text-gray-600 text-xs mb-2">
             Assigned to {note.assignee}
           </p>
         )}
         <div className="flex items-center justify-between mb-8">
-          <h4 className="text-xl font-semibold">{note.title}</h4>
+          <h4 className="text-xl font-semibold">
+            {note.title.length > 20
+              ? `${note.title.substring(0, 20)}...`
+              : note.title}
+          </h4>
         </div>
-        <p className="text-gray-700">{note.description}</p>
+        {/* <p className="text-gray-700">{note.description}</p> */}
       </div>
-      <div className="mt-2">
+      <div className="mt-0">
         {" "}
         <button
           onClick={handleUpdateClick}
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200"
+          className="w-full bg-blue-500 text-white py-2 px-4 hover:bg-blue-600 transition duration-200 dark:bg-blue-800 dark:hover:bg-blue-700"
         >
-          Update
+          View
         </button>
       </div>
     </div>
