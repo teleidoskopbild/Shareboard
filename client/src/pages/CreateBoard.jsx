@@ -70,7 +70,7 @@ function CreateBoard() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 md:p-8">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 md:p-8 dark:bg-gray-900 dark:text-gray-200">
       <h2 className="text-3xl md:text-4xl font-bold mb-4">
         Create a New Board
       </h2>
@@ -84,8 +84,8 @@ function CreateBoard() {
             value={boardName}
             onChange={(e) => setBoardName(e.target.value)}
             required
-            placeholder="name of the board"
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter a Name for the board"
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 dark:bg-gray-600 dark:text-gray-200"
           />
         </div>
 
@@ -96,8 +96,8 @@ function CreateBoard() {
             value={ownerName}
             onChange={(e) => setOwnerName(e.target.value)}
             required
-            placeholder="your Name"
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your Name"
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 dark:bg-gray-600  dark:text-gray-200"
           />
         </div>
 
@@ -108,14 +108,14 @@ function CreateBoard() {
             value={ownerEmail}
             onChange={(e) => setOwnerEmail(e.target.value)}
             required
-            placeholder="your email-adress"
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your E-Mail"
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 dark:bg-gray-600  dark:text-gray-200"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200"
+          className="w-full bg-blue-500 text-white mt-6 py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-blue-900 dark:hover:bg-blue-800"
         >
           Create Board
         </button>

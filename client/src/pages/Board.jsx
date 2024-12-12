@@ -259,13 +259,13 @@ export default function Board() {
 
   return (
     <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
-      <div className="flex flex-col min-h-screen px-4">
+      <div className="flex flex-col min-h-screen px-4 dark:bg-gray-900 dark:text-gray-200 ">
         {/* Header */}
-        <div className="flex flex-col lg:flex-row justify-between items-center mb-8 px-4 gap-4 bg-blue-100 p-4 mt-2 rounded-lg">
+        <div className="flex flex-col lg:flex-row justify-between items-center mb-8 px-4 gap-4 p-4 mt-2 rounded-lg">
           {/* Board Name */}
           <div className="">
-            <h1 className="text-4xl font-bold text-gray-800 leading-tight">
-              Boardname: {boardData.board.name}
+            <h1 className="text-4xl font-bold text-gray-800 leading-tight dark:text-gray-200">
+              Project: {boardData.board.name}
             </h1>
           </div>
 
@@ -274,9 +274,9 @@ export default function Board() {
             <div className="mt-4 lg:mt-0">
               <button
                 onClick={handleNavigateToSettings}
-                className="bg-blue-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
+                className="bg-blue-500 text-white mr-16 py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 dark:bg-blue-900 dark:hover:bg-blue-800"
               >
-                Back to Settings
+                Go to Settings
               </button>
             </div>
           )}
@@ -285,50 +285,55 @@ export default function Board() {
         {/* Main Content */}
         <div className="flex flex-col lg:flex-row gap-2 flex-grow">
           {/* Task hinzufügen */}
-          <div className="flex flex-col gap-0 w-full lg:w-1/4 mt-0">
+          <div className="flex flex-col gap-0 w-full lg:w-1/4 mt-0 ">
             <form
               onSubmit={handleSubmit}
-              className="bg-white shadow-md  border border-gray-300 rounded-lg p-6 mb-8 w-full max-w-md"
+              className="bg-white shadow-md  border border-gray-300 rounded-lg p-6 mb-8 w-full max-w-md dark:bg-gray-800 dark:text-gray-200"
             >
-              <h3 className="text-lg font-semibold mb-4">Add a Task</h3>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                  Add a Task
+                </h3>{" "}
+                <button
+                  type="submit"
+                  className="ml-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 dark:bg-blue-900 dark:hover:bg-blue-800"
+                >
+                  Add Task
+                </button>
+              </div>
+
               <input
                 type="text"
                 value={newTitle}
                 onChange={(e) => setNewTitle(e.target.value)}
                 placeholder="Title"
-                className="border border-gray-300 rounded-lg p-2 w-full mb-4"
+                className="border border-gray-300 rounded-lg p-2 w-full mb-4 dark:bg-gray-600"
                 required
               />
               <textarea
                 value={newDescription}
                 onChange={(e) => setNewDescription(e.target.value)}
                 placeholder="Description"
-                className="border border-gray-300 rounded-lg p-2 w-full mb-4"
+                className="border border-gray-300 rounded-lg p-2 w-full mb-4 dark:bg-gray-600"
                 required
               />
-              <button
-                type="submit"
-                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-              >
-                Add Task
-              </button>
             </form>
             {/* Benutzer-Log */}
-            <div className="mb-8 mt-2 w-full max-w-md bg-white border border-gray-300 rounded-lg shadow-lg p-6">
+            <div className="mb-8 mt-2 w-full max-w-md bg-white border border-gray-300 rounded-lg shadow-lg p-6 dark:bg-gray-800 dark:text-gray-200">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-800">
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
                   User Log
                 </h3>
                 <button
                   onClick={handleNavigateToUserLog}
-                  className="ml-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                  className="ml-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 dark:bg-blue-900 dark:hover:bg-blue-800"
                 >
                   View All
                 </button>
               </div>
 
               <ul className="space-y-2">
-                {userLog.slice(0, 3).map((log, index) => {
+                {userLog.slice(0, 5).map((log, index) => {
                   const timestamp = new Date(log.timestamp);
                   const formattedTime = timestamp.toLocaleTimeString([], {
                     hour: "2-digit",
@@ -343,7 +348,7 @@ export default function Board() {
                   return (
                     <li
                       key={index}
-                      className="text-gray-600 bg-gray-50 rounded-md p-3 shadow-sm"
+                      className="text-gray-600 bg-gray-50 rounded-md p-3 shadow-sm dark:bg-gray-600 dark:text-gray-200"
                     >
                       <p>{log.message} </p>
                       <p className="mt-2 text-gray-500 text-sm">

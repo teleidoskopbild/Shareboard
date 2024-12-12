@@ -96,6 +96,12 @@ const UpdateNote = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
 
+    if (!note.title.trim()) {
+      // Überprüft, ob der Titel leer ist
+      alert("Title cannot be empty!");
+      return; // Bricht die Funktion ab, wenn der Titel leer ist
+    }
+
     let logMessage = "";
     // Überprüfen, ob sich der Titel geändert hat
     if (note.title !== originalNote.title) {
@@ -209,113 +215,119 @@ const UpdateNote = () => {
   console.log("Location state:", location.state);
 
   return (
-    <div className="p-6 md:p-8 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Edit Task</h1>
+    <div className="min-h-screen dark:bg-gray-900 dark:text-gray-200">
+      {" "}
+      <div className="p-6 md:p-8 max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold mb-6">Edit Task</h1>
 
-      <form onSubmit={handleUpdate} className="space-y-6">
-        <div>
-          <label htmlFor="title" className="block text-lg font-medium mb-2">
-            Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={note.title}
-            onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+        <form onSubmit={handleUpdate} className="space-y-6">
+          <div>
+            <label htmlFor="title" className="block text-lg font-medium mb-2">
+              Title
+            </label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              value={note.title}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-600"
+            />
+          </div>
 
-        <div>
-          <label
-            htmlFor="description"
-            className="block text-lg font-medium mb-2"
-          >
-            Description
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            value={note.description}
-            onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+          <div>
+            <label
+              htmlFor="description"
+              className="block text-lg font-medium mb-2"
+            >
+              Description
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              value={note.description}
+              onChange={handleChange}
+              className="w-full p-3 h-96 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-600"
+            />
+          </div>
 
-        <div>
-          <button
-            onClick={() => generateDescriptionFromTitle(note.title)}
-            type="button"
-            className="w-full bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200"
-          >
-            Generate Description
-          </button>
+          <div>
+            <button
+              onClick={() => generateDescriptionFromTitle(note.title)}
+              type="button"
+              className="w-full bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 dark:bg-violet-900 dark:hover:bg-violet-800"
+            >
+              Generate Description
+            </button>
 
-          <label htmlFor="column" className="block text-lg font-medium mb-2">
-            Column
-          </label>
-          <select
-            id="column"
-            name="columnId"
-            value={selectedColumn}
-            onChange={handleColumnChange}
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option className="" value="">
-              Select:
-            </option>
-            {columns.map((column) => (
-              <option key={column.id} value={column.id}>
-                {column.name}
+            <label htmlFor="column" className="block text-lg font-medium mb-2">
+              Column
+            </label>
+            <select
+              id="column"
+              name="columnId"
+              value={selectedColumn}
+              onChange={handleColumnChange}
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-600"
+            >
+              <option className="" value="">
+                Select:
               </option>
-            ))}
-          </select>
-        </div>
+              {columns.map((column) => (
+                <option key={column.id} value={column.id}>
+                  {column.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div>
-          <label htmlFor="assignee" className="block text-lg font-medium mb-2">
-            Assign:
-          </label>
-          <select
-            id="assignee"
-            name="assignee"
-            value={note.assignee}
-            onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="nobody assigned">Nobody assigned</option>
-            {users.map((user) => (
-              <option key={user.id} value={user.name}>
-                {user.name}
-              </option>
-            ))}
-          </select>
-          <p className="mt-2">Assigned to: {note.assignee}</p>
-        </div>
+          <div>
+            <label
+              htmlFor="assignee"
+              className="block text-lg font-medium mb-2"
+            >
+              Assign:
+            </label>
+            <select
+              id="assignee"
+              name="assignee"
+              value={note.assignee}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-600"
+            >
+              <option value="Nobody">Nobody</option>
+              {users.map((user) => (
+                <option key={user.id} value={user.name}>
+                  {user.name}
+                </option>
+              ))}
+            </select>
+            <p className="mt-2">Assigned to: {note.assignee}</p>
+          </div>
 
-        <div className="flex flex-col space-y-4 mt-6">
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200"
-          >
-            Update Task
-          </button>
-          <button
-            type="button"
-            onClick={() => navigate(-1)}
-            className="w-full bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-200"
-          >
-            Go Back without Changes
-          </button>
-          <button
-            onClick={handleDelete}
-            className="w-full bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600 transition duration-200"
-          >
-            Delete Task
-          </button>
-        </div>
-      </form>
+          <div className="flex flex-col space-y-4 mt-6">
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-violet-900 dark:hover:bg-violet-800"
+            >
+              Update Task
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              className="w-full bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-200 dark:bg-purple-900 dark:hover:bg-purple-800"
+            >
+              Go Back without Changes
+            </button>
+            <button
+              onClick={handleDelete}
+              className="w-full bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600 transition duration-200"
+            >
+              Delete Task
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

@@ -42,7 +42,7 @@ function SelectBoard() {
   ];
 
   return (
-    <div className="flex flex-col items-center justify-center  min-h-screen p-4 md:p-8">
+    <div className="flex flex-col items-center justify-center  min-h-screen p-4 md:p-8 dark:bg-gray-900 dark:text-gray-200">
       <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">
         Select a Board Layout
       </h2>
@@ -53,11 +53,11 @@ function SelectBoard() {
             <button
               key={index}
               onClick={() => setSelectedLayout(layout)}
-              className="bg-gray-200 text-lg text-gray-800 py-3 px-6 rounded-md hover:bg-gray-300 transition duration-200 w-full  focus:outline-none focus:bg-blue-500 focus:text-white"
+              className="bg-gray-200 text-lg text-gray-800 py-3 px-6 rounded-md hover:bg-gray-300 transition duration-200 w-full  focus:outline-none focus:bg-blue-500 focus:text-white dark:focus:bg-green-500"
             >
               {layout.name}
             </button>
-            <p className="top-full text-sm text-gray-600 opacity-0 group-hover:opacity-100 transition duration-200 text-center mt-2">
+            <p className="top-full text-sm text-gray-600 opacity-0 group-hover:opacity-100 transition duration-200 text-center mt-2 dark:text-gray-300">
               {layout.description}
             </p>
           </div>
@@ -66,7 +66,7 @@ function SelectBoard() {
           <div className="mt-6 w-full max-w-lg">
             {selectedLayout.name === "Freestyle" ? (
               <Link to="/freestyleboard" className="w-full">
-                <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 w-full">
+                <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 w-full dark:bg-blue-900 dark:hover:bg-blue-800">
                   Continue
                 </button>
               </Link>
@@ -76,7 +76,7 @@ function SelectBoard() {
                 state={{ layout: selectedLayout }}
                 className="w-full"
               >
-                <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 w-full">
+                <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 w-full dark:bg-blue-900 dark:hover:bg-blue-800">
                   Continue
                 </button>
               </Link>
@@ -86,7 +86,7 @@ function SelectBoard() {
         <button
           type="button"
           onClick={() => navigate(-1)}
-          className="w-full bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-200 mt-4"
+          className="w-full bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-200 mt-4 dark:bg-sky-900 dark:hover:bg-sky-800"
         >
           Back to Home
         </button>
