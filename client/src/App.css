@@ -1,3 +1,4 @@
-/* :root {
-  overflow-x: hidden;
-} */
+:root {
+  /* overflow-x: hidden; */
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}

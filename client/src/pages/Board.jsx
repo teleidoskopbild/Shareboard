@@ -4,6 +4,7 @@ import { DndContext, DragOverlay } from "@dnd-kit/core";
 import BoardColumn from "../components/BoardColumn.jsx";
 import Note from "../components/Note.jsx";
 import pusher from "../pusher.js";
+import FilterInput from "../components/FilterInput.jsx";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -19,6 +20,16 @@ export default function Board() {
   const [userLog, setUserLog] = useState([]);
 
   const [reload, setReload] = useState(true);
+
+  const [filter, setFilter] = useState("");
+
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+  };
+
+  const filteredNotes = notes.filter((note) =>
+    note.title.toLowerCase().includes(filter.toLowerCase())
+  );
 
   const navigate = useNavigate();
   const handleNavigateToSettings = () => {
@@ -267,6 +278,7 @@ export default function Board() {
             <h1 className="text-4xl font-bold text-gray-800 leading-tight dark:text-gray-200">
               Project: {boardData.board.name}
             </h1>
+            <FilterInput onFilterChange={handleFilterChange} />
           </div>
 
           {/* Settings Button */}
@@ -369,7 +381,7 @@ export default function Board() {
                 <BoardColumn
                   key={column.id}
                   title={column.name}
-                  notes={notes.filter(
+                  notes={filteredNotes.filter(
                     (note) => note.board_column_fk === column.id
                   )}
                   columnId={column.id}
