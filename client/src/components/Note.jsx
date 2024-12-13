@@ -22,7 +22,7 @@ const Note = ({ note, userKey, currentUserName }) => {
         ref={setNodeRef}
         {...listeners}
         {...attributes}
-        className={`border border-gray-300 p-4 mb-2 bg-gray-200 h-20 overflow-hidden ${
+        className={`border border-gray-300 p-4 mb-2 bg-gray-200 h-20 overflow-hidden bg-gray-300 rounded-md ${
           isDragging ? "opacity-50" : "opacity-100"
         } transition-opacity dark:bg-gray-400 dark:text-gray-200`}
       >
@@ -33,7 +33,7 @@ const Note = ({ note, userKey, currentUserName }) => {
           </p>
         )}
         <div className="flex items-center justify-between mb-8">
-          <h4 className="text-xl font-semibold">
+          <h4 className="text-xl font-medium">
             {note.title.length > 20
               ? `${note.title.substring(0, 20)}...`
               : note.title}

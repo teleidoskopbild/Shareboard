@@ -16,12 +16,12 @@ const BoardColumn = ({
   return (
     <div
       ref={setNodeRef}
-      className={`flex flex-col rounded-lg w-80 min-h-[350px] bg-gray-200 dark:bg-gray-700 shadow-md transition-all mb-8 ${
-        isOver ? "border-blue-600 scale-105 shadow-lg" : "border-gray-300"
+      className={`flex flex-col rounded-lg w-80 min-h-[350px] bg-gray-100 dark:bg-gray-700 shadow-md transition-all mb-8 ${
+        isOver ? "border border-4 border-blue-600 shadow-lg" : "border-gray-300"
       }`}
     >
       <div
-        className={`bg-blue-500 text-white p-4 rounded-t-lg ${colorClass} dark:bg-gray-700 dark:text-gray-200`}
+        className={`bg-blue-500 text-white p-2 rounded-t-lg ${colorClass} dark:bg-gray-700 dark:text-gray-200`}
         style={{ fontWeight: "bold", fontSize: "1.25rem", textAlign: "center" }}
       >
         <span className="px-2 py-1">{title}</span>
