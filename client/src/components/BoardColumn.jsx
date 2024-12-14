@@ -16,12 +16,15 @@ const BoardColumn = ({
   return (
     <div
       ref={setNodeRef}
-      className={`flex flex-col rounded-lg w-80 min-h-[350px] bg-gray-100 dark:bg-gray-700 shadow-md transition-all mb-8 ${
-        isOver ? "border border-4 border-blue-600 shadow-lg" : "border-gray-300"
+      className={`border border-2  flex flex-col rounded-md w-80 min-h-[350px] dark:bg-gray-700 shadow-md transition-all mb-8 ${
+        isOver
+          ? " border-2 border-blue-600 shadow-lg"
+          : "dark:border-gray-500 border-gray-200"
       }`}
+      style={{ height: "850px" }}
     >
       <div
-        className={`bg-blue-500 text-white p-2 rounded-t-lg ${colorClass} dark:bg-gray-700 dark:text-gray-200`}
+        className={`bg-blue-500 text-white p-2 rounded-t dark:rounded-t-lg ${colorClass} dark:bg-gray-900 dark:text-gray-200`}
         style={{ fontWeight: "bold", fontSize: "1.25rem", textAlign: "center" }}
       >
         <span className="px-2 py-1">{title}</span>
@@ -31,8 +34,8 @@ const BoardColumn = ({
       </div>
 
       <div
-        className="flex flex-col gap-4 p-4 overflow-y-auto w-80 dark:bg-gray-400"
-        style={{ height: "750px" }}
+        className="flex flex-col gap-4 p-2 overflow-y-auto dark:bg-gray-950"
+        style={{ height: "800px" }}
       >
         {notes.length > 0 ? (
           notes.map((note) => (

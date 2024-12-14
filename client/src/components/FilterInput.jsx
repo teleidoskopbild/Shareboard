@@ -17,7 +17,7 @@ const FilterInput = ({ onFilterChange }) => {
         value={filter}
         onChange={handleChange}
         placeholder="Filter tasks by title..."
-        className="border border-gray-300 rounded-lg p-2 w-full dark:bg-gray-600 mt-2"
+        className="border border-gray-300 rounded-lg p-2 w-full dark:bg-gray-600 mt-2 dark:border-gray-400"
       />
     </div>
   );

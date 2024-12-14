@@ -16,26 +16,26 @@ const Note = ({ note, userKey, currentUserName }) => {
   };
 
   return (
-    <div className="border-0 flex flex-col">
+    <div className="border border-2 dark:border-gray-600 rounded-md flex flex-col">
       <div
         onClick={(e) => console.debug(e)}
         ref={setNodeRef}
         {...listeners}
         {...attributes}
-        className={`border border-gray-300 p-4 mb-2 bg-gray-200 h-20 overflow-hidden bg-gray-300 rounded-md ${
+        className={` p-4  bg-gray-50 h-20 overflow-hidden dark:border-gray-700 dark:bg-gray-900 ${
           isDragging ? "opacity-50" : "opacity-100"
-        } transition-opacity dark:bg-gray-400 dark:text-gray-200`}
+        } transition-opacity dark:bg-gray-900 dark:text-gray-200`}
       >
         {" "}
         {note.assignee && (
-          <p className="text-gray-600 text-xs mb-2">
+          <p className="text-gray-600 text-xs mb-2 dark:text-gray-300">
             Assigned to {note.assignee}
           </p>
         )}
         <div className="flex items-center justify-between mb-8">
           <h4 className="text-xl font-medium">
-            {note.title.length > 20
-              ? `${note.title.substring(0, 20)}...`
+            {note.title.length > 22
+              ? `${note.title.substring(0, 22)}...`
               : note.title}
           </h4>
         </div>
@@ -43,11 +43,10 @@ const Note = ({ note, userKey, currentUserName }) => {
       </div>
       <div className="mt-0">
         {" "}
-        <button
-          onClick={handleUpdateClick}
-          className="w-full bg-blue-500 text-white py-2 px-4 hover:bg-blue-600 transition duration-200 dark:bg-blue-800 dark:hover:bg-blue-700"
-        >
-          View
+        <button className=" w-full bg-gray-50 text-left text-blue-400 py-2 px-4  transition duration-200 dark:bg-gray-900">
+          <span className="hover:text-blue-600" onClick={handleUpdateClick}>
+            View Task
+          </span>
         </button>
       </div>
     </div>
