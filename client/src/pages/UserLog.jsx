@@ -10,6 +10,8 @@ export default function UserLog() {
   console.log({ params });
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+
   console.log(shareboardId);
   console.log(userKey);
   useEffect(() => {
@@ -31,6 +33,10 @@ export default function UserLog() {
     fetchLogs();
   }, [shareboardId]);
 
+  const filteredLogs = logs.filter(
+    (log) => log.message.toLowerCase().includes(searchTerm.toLowerCase()) // Filter Logs nach Suchbegriff
+  );
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -43,12 +49,19 @@ export default function UserLog() {
     <div className="min-h-screen flex flex-col items-center justify-start bg-gray-100 dark:bg-gray-900 dark:text-gray-200">
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg flex flex-col mt-16 dark:bg-gray-600">
         <h1 className="text-2xl font-semibold mb-4">User Log</h1>
+        <input
+          type="text"
+          placeholder="Search logs..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="mb-4 p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-500 dark:text-gray-200"
+        />
         {/* Logs mit max-height und Scrollen */}
         <ul
           className="space-y-2 flex-1 overflow-y-auto"
           style={{ maxHeight: "calc(100vh - 200px)" }}
         >
-          {logs.map((log, index) => {
+          {filteredLogs.map((log, index) => {
             const timestamp = new Date(log.timestamp);
             const formattedTime = timestamp.toLocaleTimeString([], {
               hour: "2-digit",
@@ -72,6 +85,11 @@ export default function UserLog() {
               </li>
             );
           })}
+          {filteredLogs.length === 0 && (
+            <p className="text-gray-500 text-center dark:text-gray-400">
+              No logs match your search.
+            </p>
+          )}
         </ul>
 
         {/* Button unterhalb der Logs */}
@@ -79,7 +97,7 @@ export default function UserLog() {
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-blue-900 dark:hover:bg-blue-800"
+            className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-blue-700 dark:hover:bg-blue-600"
           >
             Go Back to Board
           </button>

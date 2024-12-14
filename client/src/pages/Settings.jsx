@@ -362,7 +362,7 @@ export default function Settings() {
                     </div>
                     <button
                       type="submit"
-                      className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-blue-700 dark:hover:bg-blue-600"
+                      className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-blue-600 dark:hover:bg-blue-700"
                     >
                       Save
                     </button>
@@ -380,7 +380,7 @@ export default function Settings() {
                       {" "}
                       <button
                         onClick={() => handleEditUser(user)}
-                        className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 mr-6 dark:bg-blue-900 dark:hover:bg-blue-800"
+                        className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 mr-6 dark:bg-blue-600 dark:hover:bg-blue-700"
                       >
                         Edit
                       </button>

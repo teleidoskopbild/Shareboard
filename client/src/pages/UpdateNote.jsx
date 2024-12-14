@@ -247,7 +247,7 @@ const UpdateNote = () => {
               name="description"
               value={note.description}
               onChange={handleChange}
-              className="w-full p-3 h-96 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-600"
+              className="w-full p-3 h-64 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-600"
             />
           </div>
 
@@ -255,9 +255,9 @@ const UpdateNote = () => {
             <button
               onClick={() => generateDescriptionFromTitle(note.title)}
               type="button"
-              className="w-full bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 dark:bg-violet-900 dark:hover:bg-violet-800"
+              className="w-full bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-blue-600 dark:hover:bg-blue-600"
             >
-              Generate Description
+              Generate User Story - AI
             </button>
 
             <label htmlFor="column" className="block text-lg font-medium mb-2">
@@ -308,14 +308,14 @@ const UpdateNote = () => {
           <div className="flex flex-col space-y-4 mt-6">
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-violet-900 dark:hover:bg-violet-800"
+              className="w-full bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-blue-700 dark:hover:bg-blue-600"
             >
               Update Task
             </button>
             <button
               type="button"
               onClick={() => navigate(-1)}
-              className="w-full bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-200 dark:bg-purple-900 dark:hover:bg-purple-800"
+              className="w-full bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-200 dark:bg-gray-700 dark:hover:bg-blue-600"
             >
               Go Back without Changes
             </button>

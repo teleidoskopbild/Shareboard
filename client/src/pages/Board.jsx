@@ -270,12 +270,12 @@ export default function Board() {
 
   return (
     <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
-      <div className="flex flex-col min-h-screen px-4 dark:bg-gray-900 dark:text-gray-200 ">
+      <div className="flex flex-col min-h-screen px-4 dark:bg-gray-950 dark:text-gray-200 ">
         {/* Header */}
         <div className="flex flex-col lg:flex-row justify-between items-center mb-8 px-4 gap-4 p-4 mt-2 rounded-lg">
           {/* Board Name */}
-          <div className="">
-            <h1 className="text-4xl font-bold text-gray-800 leading-tight dark:text-gray-200">
+          <div className="flex">
+            <h1 className="mr-8 text-4xl font-bold text-gray-800 leading-tight dark:text-gray-200">
               Project: {boardData.board.name}
             </h1>
             <FilterInput onFilterChange={handleFilterChange} />
@@ -286,7 +286,7 @@ export default function Board() {
             <div className="mt-4 lg:mt-0">
               <button
                 onClick={handleNavigateToSettings}
-                className="bg-blue-500 text-white mr-16 py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 dark:bg-blue-900 dark:hover:bg-blue-800"
+                className="bg-blue-500 text-white mr-16 py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700"
               >
                 Go to Settings
               </button>
@@ -297,10 +297,10 @@ export default function Board() {
         {/* Main Content */}
         <div className="flex flex-col lg:flex-row gap-2 flex-grow">
           {/* Task hinzufügen */}
-          <div className="flex flex-col gap-0 w-full lg:w-1/4 mt-0 ">
+          <div className="flex flex-col gap-0 w-full lg:w-1/4 mt-0">
             <form
               onSubmit={handleSubmit}
-              className="bg-white shadow-md  border border-gray-300 rounded-lg p-6 mb-8 w-full max-w-md dark:bg-gray-800 dark:text-gray-200"
+              className="bg-white shadow-md  border border-2 border-gray-300 rounded-lg p-6 mb-8 w-full max-w-md dark:bg-gray-800 dark:text-gray-200 dark:border-gray-500"
             >
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
@@ -308,7 +308,7 @@ export default function Board() {
                 </h3>{" "}
                 <button
                   type="submit"
-                  className="ml-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 dark:bg-blue-900 dark:hover:bg-blue-800"
+                  className="ml-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700"
                 >
                   Add Task
                 </button>
@@ -331,21 +331,21 @@ export default function Board() {
               />
             </form>
             {/* Benutzer-Log */}
-            <div className="mb-8 mt-2 w-full max-w-md bg-white border border-gray-300 rounded-lg shadow-lg p-6 dark:bg-gray-800 dark:text-gray-200">
+            <div className="mb-8 mt-8 w-full max-w-md bg-white border border-2 border-gray-300 rounded-lg shadow-lg p-6 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-600">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
                   User Log
                 </h3>
                 <button
                   onClick={handleNavigateToUserLog}
-                  className="ml-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 dark:bg-blue-900 dark:hover:bg-blue-800"
+                  className="ml-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700"
                 >
                   View All
                 </button>
               </div>
 
               <ul className="space-y-2">
-                {userLog.slice(0, 5).map((log, index) => {
+                {userLog.slice(0, 4).map((log, index) => {
                   const timestamp = new Date(log.timestamp);
                   const formattedTime = timestamp.toLocaleTimeString([], {
                     hour: "2-digit",
@@ -363,7 +363,7 @@ export default function Board() {
                       className="text-gray-600 bg-gray-50 rounded-md p-3 shadow-sm dark:bg-gray-600 dark:text-gray-200"
                     >
                       <p>{log.message} </p>
-                      <p className="mt-2 text-gray-500 text-sm">
+                      <p className="mt-2 text-gray-500 dark:text-gray-400 text-sm">
                         {formattedTime} on {formattedDate}
                       </p>
                     </li>
