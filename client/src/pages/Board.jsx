@@ -23,13 +23,32 @@ export default function Board() {
 
   const [filter, setFilter] = useState("");
 
+  const [assignmentFilter, setAssignmentFilter] = useState("all");
+
+  const handleAssignmentChange = (event) => {
+    setAssignmentFilter(event.target.value);
+  };
+
+  const filteredNotes = notes.filter((note) => {
+    const matchesAssignment =
+      assignmentFilter === "all" ||
+      (assignmentFilter === "nobody" && note.assignee === "nobody") ||
+      note.assignee === assignmentFilter;
+
+    const matchesTitle = note.title
+      .toLowerCase()
+      .includes(filter.toLowerCase());
+
+    return matchesAssignment && matchesTitle;
+  });
+
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);
   };
 
-  const filteredNotes = notes.filter((note) =>
-    note.title.toLowerCase().includes(filter.toLowerCase())
-  );
+  // const filteredNotes = notes.filter((note) =>
+  //   note.title.toLowerCase().includes(filter.toLowerCase())
+  // );
 
   const navigate = useNavigate();
   const handleNavigateToSettings = () => {
@@ -279,6 +298,22 @@ export default function Board() {
               Project: {boardData.board.name}
             </h1>
             <FilterInput onFilterChange={handleFilterChange} />
+            <div className="flex items-center mt-2 ml-4">
+              <select
+                value={assignmentFilter}
+                onChange={handleAssignmentChange}
+                className="p-2 border border-gray-300 rounded-lg dark:bg-gray-600 dark:text-gray-200 dark:border-gray-400 dark:text-gray-400"
+              >
+                <option value="all">All</option>
+                <option value="nobody">Nobody</option>
+                {boardData.users.map((user) => (
+                  <option key={user.id} value={user.name}>
+                    {user.name}
+                  </option>
+                ))}
+              </select>
+              <p className="ml-2 text-gray-800 dark:text-gray-400"></p>
+            </div>
           </div>
 
           {/* Settings Button */}
