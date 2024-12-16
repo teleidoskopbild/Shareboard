@@ -1,4 +1,5 @@
 import db from "../util/db-connect.js";
+import { selectAllColumnsByUserKey } from "../services/selectBoardColumns.js";
 
 // Alle Spalten eines Shareboards abrufen
 export const getAllColumns = async (req, res) => {
@@ -18,22 +19,7 @@ export const getAllColumns = async (req, res) => {
 export const getAllColumnsByUserKey = async (req, res) => {
   const { userKey } = req.params; // userKey kommt aus der URL
   try {
-    // shareboardId basierend auf dem userKey ermitteln
-    const user = await db("shareboard_users")
-      .where("shareboard_key", userKey)
-      .select("shareboard_fk")
-      .first();
-
-    if (!user) {
-      return res.status(404).json({ message: "Benutzer nicht gefunden" });
-    }
-
-    const shareboardId = user.shareboard_fk;
-
-    // Spalten des Shareboards abrufen
-    const columns = await db("shareboard_board_columns")
-      .where("shareboard_fk", shareboardId)
-      .select("*");
+    const columns = await selectAllColumnsByUserKey(userKey);
 
     res.json(columns);
   } catch (error) {

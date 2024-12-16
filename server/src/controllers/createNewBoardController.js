@@ -1,5 +1,6 @@
 import db from "../util/db-connect.js";
 import mg from "../util/mailgun.js";
+import { selectAllColumnsByUserKey } from "../services/selectBoardColumns.js";
 
 export const createNewBoard = async (req, res) => {
   const { boardName, ownerName, ownerEmail, layout } = req.body; // Layout wird übergeben
@@ -35,7 +36,26 @@ export const createNewBoard = async (req, res) => {
     // Warten, bis alle Spalten erstellt sind
     await Promise.all(columnPromises);
 
-    // 4. E-Mail senden, wenn eine E-Mail-Adresse vorhanden ist
+    const columns = await selectAllColumnsByUserKey(shareboardKey);
+
+    console.log("c", columns);
+
+    // console.log("cols ", layout.columns[0]);
+    // // 4. Eine neue Note erstellen
+    const welcomeNote = {
+      shareboard_fk: newShareboard.id,
+      board_column_fk: columns[0].id, // Default-Spalte oder eine spezielle Spalte, wenn nötig
+      title: "Welcome to Shareboard!",
+      description: "Blablablablabla!",
+      user_fk: owner.id, // Ersteller ist der Owner
+    };
+    console.log("welcome ", welcomeNote);
+
+    const [createdNote] = await db("shareboard_notes")
+      .insert(welcomeNote)
+      .returning("*");
+
+    // 5. E-Mail senden, wenn eine E-Mail-Adresse vorhanden ist
     if (ownerEmail) {
       const messageData = {
         from: `Shareboard <noreply@${process.env.MAILGUN_DOMAIN}>`,

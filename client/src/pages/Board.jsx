@@ -291,9 +291,9 @@ export default function Board() {
     <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
       <div className="flex flex-col min-h-screen px-4 dark:bg-gray-950 dark:text-gray-200 ">
         {/* Header */}
-        <div className="flex flex-col lg:flex-row justify-between items-center mb-8 px-4 gap-4 p-4 mt-2 rounded-lg">
+        <div className="flex flex-col flex-wrap  lg:flex-row justify-between items-center mb-8 px-4 gap-4 p-4 mt-2 rounded-lg">
           {/* Board Name */}
-          <div className="flex">
+          <div className="flex flex-wrap">
             <h1 className="mr-8 text-4xl font-bold text-gray-800 leading-tight dark:text-gray-200">
               Project: {boardData.board.name}
             </h1>
