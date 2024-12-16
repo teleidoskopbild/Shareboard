@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -24,6 +25,8 @@ const UpdateNote = () => {
   const [users, setUsers] = useState([]);
   const [originalNote, setOriginalNote] = useState(null);
   // const [answer, setAnswer] = useState(null);
+
+  const [isMarkdownView, setIsMarkdownView] = useState(false);
 
   console.log("shareboard_fk:", shareboard_fk);
   console.log("userName ", userName);
@@ -55,6 +58,10 @@ const UpdateNote = () => {
     fetchColumns();
     fetchUsers();
   }, [id, userKey]);
+
+  const toggleMarkdownView = () => {
+    setIsMarkdownView((prev) => !prev);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -216,7 +223,6 @@ const UpdateNote = () => {
 
   return (
     <div className="min-h-screen dark:bg-gray-900 dark:text-gray-200">
-      {" "}
       <div className="p-6 md:p-8 max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-6">Edit Task</h1>
 
@@ -236,19 +242,51 @@ const UpdateNote = () => {
           </div>
 
           <div>
-            <label
-              htmlFor="description"
-              className="block text-lg font-medium mb-2"
-            >
-              Description
-            </label>
-            <textarea
-              id="description"
-              name="description"
-              value={note.description}
-              onChange={handleChange}
-              className="w-full p-3 h-64 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-600"
-            />
+            <div className="flex mb-4 justify-between">
+              <label
+                htmlFor="description"
+                className="block text-lg font-medium mb-2"
+              >
+                Description
+              </label>{" "}
+              <span>
+                {" "}
+                <button
+                  onClick={toggleMarkdownView}
+                  type="button"
+                  className="bg-blue-500 text-white ml-2 py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-blue-600 dark:hover:bg-blue-600"
+                >
+                  {isMarkdownView ? "Edit" : "Preview"}
+                </button>
+              </span>
+            </div>
+
+            {isMarkdownView ? (
+              <div className="p-2 h-64 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-600 overflow-auto">
+                {console.log(note.description)}
+                <ReactMarkdown
+                  components={{
+                    ol: ({ ...props }) => (
+                      <ol {...props} className="list-decimal pl-4" />
+                    ),
+                    ul: ({ ...props }) => (
+                      <ul {...props} className="list-disc pl-4" />
+                    ),
+                    p: ({ ...props }) => <p {...props} className="mb-4" />,
+                  }}
+                >
+                  {note.description}
+                </ReactMarkdown>
+              </div>
+            ) : (
+              <textarea
+                id="description"
+                name="description"
+                value={note.description}
+                onChange={handleChange}
+                className="w-full p-3 h-64 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-600"
+              />
+            )}
           </div>
 
           <div>
