@@ -48,20 +48,18 @@ const Note = ({ note, userKey, currentUserName }) => {
             View Task
           </span>
           <span
-            className={`z-10 w-4 h-4 rounded-full ${
+            className={`w-4 h-4 rounded-full ${
               note.priority === "Low Priority"
-                ? "text-green-600"
+                ? "bg-green-500"
                 : note.priority === "Normal Priority"
-                ? "text-yellow-600"
+                ? "bg-yellow-500"
                 : note.priority === "High Priority"
-                ? "text-red-600"
+                ? "bg-red-500"
                 : note.priority === "No Priority"
-                ? "text-transparent"
+                ? "bg-transparent"
                 : ""
             }`}
-          >
-            <i className="fa fa-circle" aria-hidden="true"></i>
-          </span>
+          ></span>
         </button>
       </div>
     </div>
