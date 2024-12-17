@@ -33,7 +33,7 @@ CREATE TABLE shareboard_notes (
     title VARCHAR(255) NOT NULL,
     description TEXT,
     user_fk INTEGER REFERENCES shareboard_users(id) ON DELETE SET NULL,
-    priority INTEGER DEFAULT 0,
+    priority VARCHAR(255) DEFAULT 'No Priority',
     assignee VARCHAR(255) DEFAULT 'nobody',
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP

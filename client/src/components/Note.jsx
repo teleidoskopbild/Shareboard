@@ -43,9 +43,24 @@ const Note = ({ note, userKey, currentUserName }) => {
       </div>
       <div className="mt-0">
         {" "}
-        <button className=" w-full bg-gray-50 text-left text-blue-400 py-2 px-4  transition duration-200 dark:bg-gray-900">
+        <button className="flex justify-between w-full bg-gray-50 text-left text-blue-400 py-2 px-4  transition duration-200 dark:bg-gray-900">
           <span className="hover:text-blue-600" onClick={handleUpdateClick}>
             View Task
+          </span>
+          <span
+            className={`z-10 w-4 h-4 rounded-full ${
+              note.priority === "Low Priority"
+                ? "text-green-600"
+                : note.priority === "Normal Priority"
+                ? "text-yellow-600"
+                : note.priority === "High Priority"
+                ? "text-red-600"
+                : note.priority === "No Priority"
+                ? "text-transparent"
+                : ""
+            }`}
+          >
+            <i className="fa fa-circle" aria-hidden="true"></i>
           </span>
         </button>
       </div>
