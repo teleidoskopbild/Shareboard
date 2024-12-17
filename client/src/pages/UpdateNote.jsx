@@ -141,6 +141,11 @@ const UpdateNote = () => {
       logMessage += `Task ${note.title} was assigned to ${note.assignee} by ${userName}`;
     }
 
+    // Überprüfen, ob die Priorität sich geändert hat
+    if (note.priority !== originalNote.priority) {
+      logMessage += `Task ${note.title} changed from ${originalNote.priority} to ${note.priority} by ${userName}`;
+    }
+
     // Wenn es eine Änderung gibt, erstelle das Log
     if (logMessage) {
       const logResponse = await fetch(`${backendUrl}/api/logs`, {
@@ -219,12 +224,44 @@ const UpdateNote = () => {
     }));
   };
 
-  console.log("Location state:", location.state);
+  const handlePriorityChange = (newPriority) => {
+    setNote((prevNote) => ({
+      ...prevNote,
+      priority: newPriority,
+    }));
+  };
+
+  const priorityLevels = [
+    "No Priority",
+    "Low Priority",
+    "Normal Priority",
+    "High Priority",
+  ];
 
   return (
     <div className="min-h-screen dark:bg-gray-900 dark:text-gray-200">
       <div className="p-6 md:p-8 max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">Edit Task</h1>
+        <div className="flex flex-wrap items-center gap-0 ">
+          {" "}
+          <h1 className="text-3xl font-bold">Edit Task</h1>
+          <div className="ml-auto space-x-2">
+            {" "}
+            {priorityLevels.map((priority) => (
+              <button
+                type="button"
+                key={priority}
+                className={`px-4 py-2 rounded-md m-2 ${
+                  note.priority === priority
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-200 text-gray-800"
+                }`}
+                onClick={() => handlePriorityChange(priority)}
+              >
+                {priority}
+              </button>
+            ))}
+          </div>
+        </div>
 
         <form onSubmit={handleUpdate} className="space-y-6">
           <div>
