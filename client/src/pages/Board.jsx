@@ -25,6 +25,12 @@ export default function Board() {
 
   const [assignmentFilter, setAssignmentFilter] = useState("all");
 
+  const [priorityFilter, setPriorityFilter] = useState("All");
+
+  const handlePriorityChange = (event) => {
+    setPriorityFilter(event.target.value);
+  };
+
   const handleAssignmentChange = (event) => {
     setAssignmentFilter(event.target.value);
   };
@@ -39,7 +45,15 @@ export default function Board() {
       .toLowerCase()
       .includes(filter.toLowerCase());
 
-    return matchesAssignment && matchesTitle;
+    const matchesPriority =
+      priorityFilter === "All" ||
+      (priorityFilter === "No Priority" && note.priority === "No Priority") ||
+      (priorityFilter === "Low Priority" && note.priority === "Low Priority") ||
+      (priorityFilter === "Normal Priority" &&
+        note.priority === "Normal Priority") ||
+      (priorityFilter === "High Priority" && note.priority === "High Priority");
+
+    return matchesAssignment && matchesTitle && matchesPriority;
   });
 
   const handleFilterChange = (newFilter) => {
@@ -304,6 +318,9 @@ export default function Board() {
                 onChange={handleAssignmentChange}
                 className="p-2 border border-gray-300 rounded-lg dark:bg-gray-600 dark:text-gray-200 dark:border-gray-400 dark:text-gray-400"
               >
+                <option value="" disabled>
+                  Filter Users
+                </option>
                 <option value="all">All</option>
                 <option value="nobody">Nobody</option>
                 {boardData.users.map((user) => (
@@ -313,6 +330,22 @@ export default function Board() {
                 ))}
               </select>
               <p className="ml-2 text-gray-800 dark:text-gray-400"></p>
+            </div>
+            <div className="flex items-center mt-2 ml-4">
+              <select
+                value={priorityFilter}
+                onChange={handlePriorityChange}
+                className="p-2 border border-gray-300 rounded-lg dark:bg-gray-600 dark:text-gray-200 dark:border-gray-400 dark:text-gray-400"
+              >
+                <option value="" disabled>
+                  Filter Priorities
+                </option>
+                <option value="All">All</option>
+                <option value="No Priority">No Priority</option>
+                <option value="Low Priority">Low Priority</option>
+                <option value="Normal Priority">Normal Priority</option>
+                <option value="High Priority">High Priority</option>
+              </select>
             </div>
           </div>
 
