@@ -13,6 +13,8 @@ const BoardColumn = ({
     id: columnId,
   });
 
+  const sortedNotes = [...notes].sort((a, b) => a.id - b.id);
+
   return (
     <div
       ref={setNodeRef}
@@ -37,8 +39,8 @@ const BoardColumn = ({
         className="flex flex-col gap-4 p-2 overflow-y-auto dark:bg-gray-950"
         style={{ height: "800px" }}
       >
-        {notes.length > 0 ? (
-          notes.map((note) => (
+        {sortedNotes.length > 0 ? (
+          sortedNotes.map((note) => (
             <Note
               key={note.id}
               note={note}
