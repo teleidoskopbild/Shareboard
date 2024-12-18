@@ -47,7 +47,7 @@ export default function UserLog() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-gray-100 dark:bg-gray-900 dark:text-gray-200">
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg flex flex-col mt-16 dark:bg-gray-600">
+      <div className="max-h-[850px] bg-white p-6 rounded-lg shadow-md w-full max-w-lg flex flex-col mt-16 dark:bg-gray-600">
         <h1 className="text-2xl font-semibold mb-4">User Log</h1>
         <input
           type="text"

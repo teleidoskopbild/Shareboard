@@ -280,7 +280,7 @@ export default function Settings() {
           <div className="mt-8 mb-8">
             <button
               onClick={handleNavigateToBoard}
-              className="w-full bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-blue-800 dark:hover:bg-blue-700"
+              className="w-full bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-blue-600 dark:hover:bg-blue-500"
             >
               Go to Board
             </button>
@@ -314,13 +314,15 @@ export default function Settings() {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-blue-700 dark:hover:bg-blue-600"
+            className="w-full bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-blue-600 dark:hover:bg-blue-500"
           >
             Add User
           </button>
         </form>
 
-        <h2 className="text-2xl font-semibold mb-4">Board Users</h2>
+        {boardData.users.length > 1 && (
+          <h2 className="text-2xl font-semibold mb-4">Board Users</h2>
+        )}
         <ul className="space-y-4">
           {boardData.users
             .filter((user) => !user.rights)
@@ -362,7 +364,7 @@ export default function Settings() {
                     </div>
                     <button
                       type="submit"
-                      className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-blue-600 dark:hover:bg-blue-700"
+                      className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-blue-600 dark:hover:bg-blue-500"
                     >
                       Save
                     </button>
@@ -380,7 +382,7 @@ export default function Settings() {
                       {" "}
                       <button
                         onClick={() => handleEditUser(user)}
-                        className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 mr-6 dark:bg-blue-600 dark:hover:bg-blue-700"
+                        className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 mr-6 dark:bg-blue-600 dark:hover:bg-blue-500"
                       >
                         Edit
                       </button>

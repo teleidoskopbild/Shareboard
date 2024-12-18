@@ -112,7 +112,7 @@ const UpdateNote = () => {
     let logMessage = "";
     // Überprüfen, ob sich der Titel geändert hat
     if (note.title !== originalNote.title) {
-      logMessage += `Notiz geändert: Titel von "${originalNote.title}" zu "${note.title}" von ${userName} `;
+      logMessage += `Task renamed: from "${originalNote.title}" to "${note.title}" by ${userName} `;
     }
 
     // Wenn sich die Spalte ändert, nur dann loggen
@@ -133,17 +133,17 @@ const UpdateNote = () => {
         originalNote.board_column_fk
       );
       const newColumnName = getColumnNameById(note.columnId);
-      logMessage += `Task ${note.title} was moved from ${originalColumnName} to ${newColumnName} by ${userName}`;
+      logMessage += `${note.title} was moved from ${originalColumnName} to ${newColumnName} by ${userName}`;
     }
 
     // Wenn sich der Assignee geändert hat, logge es
     if (note.assignee !== originalNote.assignee) {
-      logMessage += `Task ${note.title} was assigned to ${note.assignee} by ${userName}`;
+      logMessage += `${note.title} was assigned to ${note.assignee} by ${userName}`;
     }
 
     // Überprüfen, ob die Priorität sich geändert hat
     if (note.priority !== originalNote.priority) {
-      logMessage += `Task ${note.title} changed from ${originalNote.priority} to ${note.priority} by ${userName}`;
+      logMessage += `${note.title} changed from ${originalNote.priority} to ${note.priority} by ${userName}`;
     }
 
     // Wenn es eine Änderung gibt, erstelle das Log
@@ -244,13 +244,13 @@ const UpdateNote = () => {
         <div className="flex flex-wrap items-center gap-0 ">
           {" "}
           <h1 className="text-3xl font-bold">Edit Task</h1>
-          <div className="ml-auto space-x-2">
+          <div className="ml-auto sm:space-x-2 flex flex-wrap justify-center gap-2 mt-2">
             {" "}
             {priorityLevels.map((priority) => (
               <button
                 type="button"
                 key={priority}
-                className={`px-4 py-2 rounded-md m-2 ${
+                className={`px-2 py-2 rounded-md m-1 w-32 ${
                   note.priority === priority
                     ? "bg-blue-500 text-white"
                     : "bg-gray-200 text-gray-800"
@@ -291,7 +291,7 @@ const UpdateNote = () => {
                 <button
                   onClick={toggleMarkdownView}
                   type="button"
-                  className="bg-blue-500 text-white ml-2 py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-blue-600 dark:hover:bg-blue-600"
+                  className="bg-blue-500 text-white ml-2 py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-blue-600 dark:hover:bg-blue-500"
                 >
                   {isMarkdownView ? "Edit" : "Preview"}
                 </button>
@@ -299,9 +299,10 @@ const UpdateNote = () => {
             </div>
 
             {isMarkdownView ? (
-              <div className="p-2 h-64 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-600 overflow-auto">
+              <div className="p-2 h-64 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-600 overflow-auto h-full">
                 {console.log(note.description)}
                 <ReactMarkdown
+                  className=""
                   components={{
                     ol: ({ ...props }) => (
                       <ol {...props} className="list-decimal pl-4" />
@@ -309,7 +310,14 @@ const UpdateNote = () => {
                     ul: ({ ...props }) => (
                       <ul {...props} className="list-disc pl-4" />
                     ),
+                    li: ({ ...props }) => <li {...props} className="mb-2" />,
                     p: ({ ...props }) => <p {...props} className="mb-4" />,
+                    h1: ({ ...props }) => (
+                      <h1 {...props} className="text-2xl mb-2 mt-2" />
+                    ),
+                    h3: ({ ...props }) => (
+                      <h3 {...props} className="text-xl mb-2" />
+                    ),
                   }}
                 >
                   {note.description}
@@ -330,7 +338,7 @@ const UpdateNote = () => {
             <button
               onClick={() => generateDescriptionFromTitle(note.title)}
               type="button"
-              className="w-full bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-blue-600 dark:hover:bg-blue-600"
+              className="mb-4 w-full bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-blue-600 dark:hover:bg-blue-500"
             >
               Generate User Story - AI
             </button>
@@ -383,20 +391,20 @@ const UpdateNote = () => {
           <div className="flex flex-col space-y-4 mt-6">
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-blue-700 dark:hover:bg-blue-600"
+              className="w-full bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 dark:bg-blue-600 dark:hover:bg-blue-500"
             >
               Update Task
             </button>
             <button
               type="button"
               onClick={() => navigate(-1)}
-              className="w-full bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-200 dark:bg-gray-700 dark:hover:bg-blue-600"
+              className="w-full bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-200 dark:bg-gray-600 dark:hover:bg-blue-500"
             >
               Go Back without Changes
             </button>
             <button
               onClick={handleDelete}
-              className="w-full bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600 transition duration-200"
+              className="w-full bg-red-600 text-white py-2 px-6 rounded-md hover:bg-red-500 transition duration-200"
             >
               Delete Task
             </button>

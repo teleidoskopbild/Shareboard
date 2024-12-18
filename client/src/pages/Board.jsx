@@ -27,6 +27,12 @@ export default function Board() {
 
   const [priorityFilter, setPriorityFilter] = useState("All");
 
+  const handleResetButton = () => {
+    setFilter("");
+    setAssignmentFilter("all");
+    setPriorityFilter("All");
+  };
+
   const handlePriorityChange = (event) => {
     setPriorityFilter(event.target.value);
   };
@@ -145,7 +151,7 @@ export default function Board() {
             (user) => user.shareboard_key === userKey
           );
 
-          const logMessage = `Task - ${draggedNote.title} moved from ${fromColumn.name} to ${toColumn.name} by ${currentUser.name}`;
+          const logMessage = `${draggedNote.title} moved from ${fromColumn.name} to ${toColumn.name} by ${currentUser.name}`;
           const logResponse = await fetch(`${backendUrl}/api/logs`, {
             method: "POST",
             headers: {
@@ -303,7 +309,7 @@ export default function Board() {
 
   return (
     <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
-      <div className="flex flex-col min-h-screen px-4 dark:bg-gray-950 dark:text-gray-200 ">
+      <div className=" flex flex-col min-h-screen px-4 dark:bg-gray-950 dark:text-gray-200 ">
         {/* Header */}
         <div className="flex flex-col flex-wrap  lg:flex-row justify-between items-center mb-8 px-4 gap-4 p-4 mt-2 rounded-lg">
           {/* Board Name */}
@@ -311,12 +317,16 @@ export default function Board() {
             <h1 className="mr-8 text-4xl font-bold text-gray-800 leading-tight dark:text-gray-200">
               Project: {boardData.board.name}
             </h1>
-            <FilterInput onFilterChange={handleFilterChange} />
-            <div className="flex items-center mt-2 ml-4">
+            <FilterInput
+              onFilterChange={handleFilterChange}
+              filter={filter}
+              // setFilter={setFilter}
+            />
+            <div className="flex items-center mt-2 sm:ml-4">
               <select
                 value={assignmentFilter}
                 onChange={handleAssignmentChange}
-                className="p-2 border border-gray-300 rounded-lg dark:bg-gray-600 dark:text-gray-200 dark:border-gray-400 dark:text-gray-400"
+                className="w-40 p-2 border border-gray-300 rounded-lg dark:bg-gray-600 dark:text-gray-200 dark:border-gray-400 dark:text-gray-400"
               >
                 <option value="" disabled>
                   Filter Users
@@ -331,11 +341,11 @@ export default function Board() {
               </select>
               <p className="ml-2 text-gray-800 dark:text-gray-400"></p>
             </div>
-            <div className="flex items-center mt-2 ml-4">
+            <div className="flex items-center mt-2 sm:ml-4">
               <select
                 value={priorityFilter}
                 onChange={handlePriorityChange}
-                className="p-2 border border-gray-300 rounded-lg dark:bg-gray-600 dark:text-gray-200 dark:border-gray-400 dark:text-gray-400"
+                className="w-40 p-2 border border-gray-300 rounded-lg dark:bg-gray-600 dark:text-gray-200 dark:border-gray-400 dark:text-gray-400"
               >
                 <option value="" disabled>
                   Filter Priorities
@@ -346,15 +356,21 @@ export default function Board() {
                 <option value="Normal Priority">Normal Priority</option>
                 <option value="High Priority">High Priority</option>
               </select>
-            </div>
+            </div>{" "}
+            <button
+              onClick={handleResetButton}
+              className="ml-4 mt-2 bg-blue-500 text-white py-0 px-4 rounded-lg rounded hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500"
+            >
+              Reset Filters
+            </button>
           </div>
 
           {/* Settings Button */}
           {boardData.isOwner && (
-            <div className="mt-4 lg:mt-0">
+            <div className="mt-2">
               <button
                 onClick={handleNavigateToSettings}
-                className="bg-blue-500 text-white mr-16 py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700"
+                className="mr-auto 2xl:mr-16 bg-blue-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700"
               >
                 Go to Settings
               </button>

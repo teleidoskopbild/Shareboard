@@ -37,11 +37,11 @@ function FreestyleBoard() {
             value={newColumnName}
             onChange={(e) => setNewColumnName(e.target.value)}
             placeholder="Enter a name for the column"
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-600"
           />
           <button
             onClick={addColumn}
-            className="mt-2 bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 w-full dark:bg-purple-900 dark:hover:bg-purple-800"
+            className="mt-2 bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 w-full dark:bg-blue-800 dark:hover:bg-blue-700"
           >
             Add Column
           </button>
@@ -52,7 +52,7 @@ function FreestyleBoard() {
           {columns.map((column, index) => (
             <li
               key={index}
-              className="bg-gray-100 p-4 rounded-lg shadow-sm flex justify-between items-center"
+              className="bg-gray-100 p-4 rounded-lg shadow-sm flex justify-between items-center dark:bg-gray-600"
             >
               <span>{column.name}</span>
               <button
@@ -72,7 +72,7 @@ function FreestyleBoard() {
             state={{ layout: { name: "FreestyleBoard", columns } }}
             className="inline-block mt-6 w-full"
           >
-            <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 w-full dark:bg-violet-900 dark:hover:bg-violet-800">
+            <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 w-full dark:bg-blue-600 dark:hover:bg-blue-500">
               Continue
             </button>
           </Link>
