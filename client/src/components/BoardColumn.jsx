@@ -16,7 +16,7 @@ const BoardColumn = ({
   return (
     <div
       ref={setNodeRef}
-      className={`border border-2  flex flex-col flex-shrink-0 rounded-md w-80 min-h-[350px] dark:bg-gray-700 shadow-md transition-all mb-8 ${
+      className={`border border-2 flex flex-col flex-shrink-0 rounded-md w-80 min-h-[350px] dark:bg-gray-700 shadow-md transition-all mb-8 ${
         isOver
           ? " border-2 border-blue-600 shadow-lg"
           : "dark:border-gray-500 border-gray-200"

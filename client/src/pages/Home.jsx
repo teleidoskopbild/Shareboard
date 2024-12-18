@@ -14,7 +14,7 @@ export default function Home() {
       <div className="flex flex-col items-center w-full max-w-lg mt-16">
         <Link to="/selectboard" className="w-full group">
           <div className="relative">
-            <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 w-full dark:bg-blue-900 dark:hover:bg-blue-800">
+            <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 w-full dark:bg-blue-600 dark:hover:bg-blue-500">
               Create a Board
             </button>
             <p className="mt-2 text-sm text-gray-600 text-center opacity-0 group-hover:opacity-100 transition duration-200 dark:text-gray-300">
@@ -24,7 +24,7 @@ export default function Home() {
         </Link>{" "}
         <Link to="/login" className="w-full group mt-4">
           <div className="relative">
-            <button className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 w-full dark:bg-sky-900 dark:hover:bg-sky-800">
+            <button className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200 w-full dark:bg-sky-600 dark:hover:bg-sky-500">
               Login
             </button>
             <p className="mt-2 text-sm text-gray-600 text-center opacity-0 group-hover:opacity-100 transition duration-200 dark:text-gray-300">

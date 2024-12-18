@@ -66,7 +66,7 @@ function SelectBoard() {
           <div className="mt-6 w-full max-w-lg">
             {selectedLayout.name === "Freestyle" ? (
               <Link to="/freestyleboard" className="w-full">
-                <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 w-full dark:bg-blue-900 dark:hover:bg-blue-800">
+                <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 w-full dark:bg-blue-600 dark:hover:bg-blue-500">
                   Continue
                 </button>
               </Link>
@@ -76,7 +76,7 @@ function SelectBoard() {
                 state={{ layout: selectedLayout }}
                 className="w-full"
               >
-                <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 w-full dark:bg-blue-900 dark:hover:bg-blue-800">
+                <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 w-full dark:bg-blue-600 dark:hover:bg-blue-500">
                   Continue
                 </button>
               </Link>
@@ -86,7 +86,7 @@ function SelectBoard() {
         <button
           type="button"
           onClick={() => navigate(-1)}
-          className="w-full bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-200 mt-4 dark:bg-sky-900 dark:hover:bg-sky-800"
+          className="w-full bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-200 mt-4 dark:bg-sky-600 dark:hover:bg-sky-500"
         >
           Back to Home
         </button>

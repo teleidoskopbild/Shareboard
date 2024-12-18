@@ -19,14 +19,14 @@ export default function Login() {
             onChange={(e) => setKey(e.target.value)}
             placeholder="e.g. tm9ckk0gk"
             required
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-purple-800 dark:bg-gray-600"
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 dark:bg-gray-600"
           />
         </div>
         {key.trim() && (
           <Link to={`/board/${key}`} className="w-full">
             <button
               type="button"
-              className="w-full bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 dark:bg-blue-900 dark:hover:bg-blue-800"
+              className="w-full bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-200 dark:bg-blue-600 dark:hover:bg-blue-500"
             >
               Go to Board
             </button>
@@ -35,7 +35,7 @@ export default function Login() {
         <button
           type="button"
           onClick={() => navigate(-1)}
-          className="w-full bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-200 mt-8 dark:bg-sky-900 dark:hover:bg-sky-800"
+          className="w-full bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-200 mt-8 dark:bg-sky-600 dark:hover:bg-sky-500"
         >
           Back to Home
         </button>

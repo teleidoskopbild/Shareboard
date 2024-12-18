@@ -1,11 +1,7 @@
-import { useState } from "react";
-
-const FilterInput = ({ onFilterChange }) => {
-  const [filter, setFilter] = useState("");
-
+const FilterInput = ({ onFilterChange, filter }) => {
   const handleChange = (e) => {
     const newFilter = e.target.value;
-    setFilter(newFilter);
+    // setFilter(newFilter);
     onFilterChange(newFilter);
   };
 

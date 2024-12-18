@@ -25,7 +25,9 @@ export const sendMail = async (req, res) => {
           <h2 style="text-align: center; margin: 0 0 15px; color: #2c3e50;">Hello ${userName},</h2>
           <p style="text-align: center; margin: 0 0 15px; color: #333;">You have been invited to a shareboard: <strong>${boardName}</strong>.</p>
           <p style="text-align: center; margin: 0 0 15px; color: #333;">Your login key is: <code>${shareboardKey}</code>.</p>
-          <a href="http://localhost:5173/board/${shareboardKey}" style="text-align:center; display: block; margin-top: 20px; padding: 10px 20px; background-color: #3498db; color: #ffffff; text-decoration: none; border-radius: 4px;">Visit your board</a>
+         <div style="text-align: center; margin-top: 20px;">
+          <a href="http://localhost:5173/board/${shareboardKey}" style="display:block; margin:auto; width:200px; padding: 10px 20px; background-color: #3498db; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 14px; max-width: 200px; width: 100%;">Click here to visit your board</a>
+        </div>
         </td>
       </tr>
       <tr>
