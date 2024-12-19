@@ -1,6 +1,11 @@
 import db from "../util/db-connect.js";
 import mg from "../util/mailgun.js";
 import { selectAllColumnsByUserKey } from "../services/selectBoardColumns.js";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const CLIENT_URL = process.env.CLIENT_URL;
 
 export const createNewBoard = async (req, res) => {
   const { boardName, ownerName, ownerEmail, layout } = req.body; // Layout wird übergeben
@@ -91,7 +96,7 @@ Feel free to delete this example and start building your projects today!
         <p style="text-align: center; margin: 0 0 15px; color: #333;">You successfully created a shareboard: <strong>${boardName}</strong>.</p>
         <p style="text-align: center; margin: 0 0 15px; color: #333;">Your owner key is: <code>${shareboardKey}</code>.</p>
           <div style="text-align: center; margin-top: 20px;">
-          <a href="http://localhost:5173/board/${shareboardKey}" style="display:block; margin:auto; width:200px; padding: 10px 20px; background-color: #3498db; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 14px; max-width: 200px; width: 100%;">Click here to visit your board</a>
+          <a href="${CLIENT_URL}/board/${shareboardKey}" style="display:block; margin:auto; width:200px; padding: 10px 20px; background-color: #3498db; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 14px; max-width: 200px; width: 100%;">Click here to visit your board</a>
         </div>
       </td>
     </tr>
