@@ -107,8 +107,8 @@ function CreateBoard() {
             type="email"
             value={ownerEmail}
             onChange={(e) => setOwnerEmail(e.target.value)}
-            required
-            placeholder="Enter your E-Mail"
+            // required
+            placeholder="Enter your E-Mail (optional)"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 dark:bg-gray-600  dark:text-gray-200"
           />
         </div>
