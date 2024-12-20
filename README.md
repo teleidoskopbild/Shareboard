@@ -1,4 +1,4 @@
-# Project Name
+### Short-Info
 
 Because I haven’t registered a domain, the Mailgun functionality is limited.  
 However, the project remains fully functional without sending emails.  
