@@ -9,5 +9,5 @@ or remove the Mailgun functionality entirely if not needed.
 
 **Please Note:**  
 The project is hosted on an OnRender server, 
-so it may take a few moments to start initially, 
+so it may take 60-90 Seconds to start initially, 
 as the server might be in a "cold start" state.
