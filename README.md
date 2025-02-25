@@ -1,3 +1,10 @@
+## Please Note: 
+The project is hosted on an OnRender server, 
+so it may take 1-2 Minutes to start initially, 
+as the server might be in a "cold start" state.
+
+
+
 ### Short-Info
 
 Because I haven’t registered a domain, the Mailgun functionality is limited.  
@@ -7,10 +14,6 @@ Keys can be manually shared as needed.
 Alternatively, you can clone the project and set up your own Mailgun server,  
 or remove the Mailgun functionality entirely if not needed.
 
-**Please Note:**  
-The project is hosted on an OnRender server, 
-so it may take 60-90 Seconds to start initially, 
-as the server might be in a "cold start" state.
 
 
 
